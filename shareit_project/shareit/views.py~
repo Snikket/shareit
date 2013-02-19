@@ -63,5 +63,5 @@ def restricted(request):
 @login_required
 def user_logout(request):
 	context = RequestContext(request)
-	logout(request)
+	logout(requesT)
 	return HttpResponseRedirect('/shareit/')

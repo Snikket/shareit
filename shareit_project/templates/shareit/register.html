@@ -1,0 +1,13 @@
+<BODY>
+{% if registered %}
+	<A href="/shareit/">Thanks for registering with ShareIt.</A>
+{% else %}
+	Register Here!
+	<FORM id="user_form" method="post" action="/shareit/register/">
+		{% csrf_token %}
+		{{ uform.as_p }}
+		{{ pform.as_p }}
+		<INPUT type="Submit" name="Submit" value="Submit" />
+	</FORM>
+{% endif %}
+</BODY>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<HEADER>
+        <META http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <TITLE>Rango</TITLE>
+</HEADER>
+<BODY>
+
+        <DIV>
+                <DIV id="page_header">
+                        <H1><A href="/shareit/">ShareIt</A></H1>
+                        <DIV id="page_user">
+                                {% if user.is_authenticated %}
+                                        Welcome {{ user.username }}  |
+                                        <A href="/shareit/logout/">Logout</A>
+                                {% else %}
+                                        <A href="/shareit/register/">Register</A> |
+                                        <A href="/shareit/login/">Login</A>
+                                {% endif %}
+                        </DIV>
+                </DIV>
+
+                <DIV id="page_navbar">
+                        <A href="/sahreit/restricted/">Restricted</A> |
+                        <A href="/shareit/about/">About</A>
+                </DIV>
+
+                <DIV>
+                        {% block sidebar %}{% endblock %}
+                </DIV>
+
+                <DIV id="page_content">
+                        {% block content %}{% endblock %}
+                </DIV>
+
+                <DIV id="page_footer">
+                        {% block footer %}{% endblock %}
+                </DIV>
+
+        <DIV>
+</BODY>
+</HTML>

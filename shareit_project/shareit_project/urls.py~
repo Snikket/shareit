@@ -5,7 +5,6 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^shareit/', include('shareit.urls')),
     # Examples:
     # url(r'^$', 'shareit_project.views.home', name='home'),
     # url(r'^shareit_project/', include('shareit_project.foo.urls')),
@@ -15,4 +14,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+	url(r'^shareit/', include('shareit.urls')),
 )
