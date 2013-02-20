@@ -1,0 +1,19 @@
+<HTML>
+
+{% extends 'shareit/base.html' %}
+
+{% block content %}
+<BODY>
+{% if cat_list %}
+	<UL>
+	{% for cat in cat_list %}
+		<LI>{{ cat.name }}</LI>
+	{% endfor %}
+{% else %}
+	<P> No categories to show. </P>
+{% endif %}
+</BODY>
+
+{% endblock %}
+
+</HTML>

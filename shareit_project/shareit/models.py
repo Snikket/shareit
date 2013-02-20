@@ -19,6 +19,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['picture']
+
 class Category(models.Model):
     name = models.CharField(max_length=128,
                            unique=True)
