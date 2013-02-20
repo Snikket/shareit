@@ -5,6 +5,7 @@
 <HEADER>
         <META http-equiv="Content-type" content="text/html; charset=utf-8" />
     <TITLE>Rango</TITLE>
+	<LINK href="{{ STATIC_URL}}css/basic/basic.css" rel="stylesheet" title="basicstyle" type="text/css" />
 </HEADER>
 <BODY>
 
@@ -28,7 +29,18 @@
                 </DIV>
 
                 <DIV>
-                        {% block sidebar %}{% endblock %}
+                        {% block sidebar %}
+				<H2>Menu</H2>
+				<UL><LI><a href="/shareit/">Home</a> </LI>
+				<LI> My Profile </LI>
+				<LI> <a href="/shareit/category/">All Categories </a> </LI>
+				<LI> My Categories</LI>
+				<LI> Most Popular</LI>
+				<LI> Least Popular</LI>
+				<LI> Followers</LI>
+				<LI> Following</LI></UL>
+
+			{% endblock %}
                 </DIV>
 
                 <DIV id="page_content">

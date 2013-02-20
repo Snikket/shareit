@@ -1,17 +1,28 @@
 <HTML>
 <HEADER><TITLE>ShareIt!</TITLE></HEADER>
 <BODY>
+
 {% extends 'shareit/base.html' %}
 
 {% block sidebar %}
-	<H2>Fake List</H2>
-	<UL><LI> <a href="/shareit/category/">All Categories </a> </LI>
-	<LI> This </LI>
-	<LI> Is </LI>
-	<LI> A </LI>
-	<LI> Fake </LI>
-	<LI> List </LI></UL>
+
+	<H2>Menu</H2>
+	<UL><LI><a href="/shareit/">Home</a> </LI>
+	<LI> My Profile </LI>
+	<LI> <a href="/shareit/category/">All Categories </a> </LI>
+	<LI> My Categories</LI>
+	<LI> Most Popular</LI>
+	<LI> Least Popular</LI>
+	<LI> Followers</LI>
+	<LI> Following</LI></UL>
 
 {% endblock %}
+
+{% block content %}
+
+	Hello!
+
+{% endblock %} 
+
 </BODY>
 </HTML>
