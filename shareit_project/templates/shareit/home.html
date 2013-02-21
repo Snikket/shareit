@@ -1,5 +1,21 @@
+<!DOCTYPE html>
 <HTML>
 <HEADER><TITLE>ShareIt!</TITLE></HEADER>
+
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $('#post').html($('input:textbox').val());
+  });
+});
+</script>
+</head>
+
 <BODY>
 
 {% extends 'shareit/base.html' %}
@@ -20,7 +36,44 @@
 
 {% block content %}
 
-	Hello!
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+ 
+</head>
+ 
+<body>
+ 
+<h4>TextBox value : <label id="msg"></label></h4>
+ 
+<div style="padding:16px;">
+	TextBox : <input type="textbox" value="Type something"></input>
+</div>
+ 
+<button id="Get">Get TextBox Value</button> 
+<button id="Set">Set To "ABC"</button> 
+<button id="Reset">Reset It</button>
+ 
+<script type="text/javascript">
+    $("button:#Get").click(function () {
+ 
+	$('#msg').html($('input:textbox').val());
+ 
+    });
+ 
+    $("button:#Reset").click(function () {
+ 
+	$('#msg').html("");
+	$('input:textbox').val("");
+ 
+    });
+ 
+    $("button:#Set").click(function () {
+ 
+	$('input:textbox').val("ABC");
+	$('#msg').html($('input:textbox').val());
+ 
+    });
+ 
+</script>
 
 {% endblock %} 
 
