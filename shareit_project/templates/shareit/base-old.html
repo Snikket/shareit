@@ -24,10 +24,11 @@
                 </DIV>
 
                 <DIV id="page_navbar">
+                        <A href="/sahreit/restricted/">Restricted</A> |
                         <A href="/shareit/about/">About</A>
                 </DIV>
 
-                <DIV id ="leftsidebar">
+                <DIV>
                         {% block sidebar %}
 				<H2>Menu</H2>
 				<UL><LI><a href="/shareit/">Home</a> </LI>
@@ -36,33 +37,11 @@
 				<LI> My Categories</LI>
 				<LI> Most Popular</LI>
 				<LI> Least Popular</LI>
-				<LI> <A href="/shareit/followers/">Followers</A> </LI>
-				<LI> <a href="/shareit/following/">Following </a> </LI></UL>
+				<LI> Followers</LI>
+				<LI> Following</LI></UL>
 
 			{% endblock %}
                 </DIV>
-
-		<DIV id="rightsidebar">
-			{% block rightsidebar %}
-		
-				<!-- drop down menu for filter-->
-				<H4> Filter By: </H4>
-				    <select id="filter">
-					<option value="None">Filter</option>
-				   </select>
-
-					<br/><br/>
-				
-				<!-- drop down menu for Post-filter-->
-				<H4> Posts By: </H4>
-				<select id="postfilter">
-					<option value="None">Posts By</option>
-					<option value="None">Everyone</option>
-					<option value="None">Following</option>
-				   </select>
-
-			{% endblock %}
-		</DIV>		
 
                 <DIV id="page_content">
                         {% block content %}{% endblock %}

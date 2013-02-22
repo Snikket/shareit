@@ -1,14 +1,17 @@
 body
 {
-	background-color:#66FFFF;
-	color:#FFFFFF;
+	background-color:#FFFFFF;
+	color:#000000;
 	font: 20px bold ariel,sans-serif;
 }
-p{
+p
+{
 	color:#000000;
 }
+
 a
 {
+	color:#FF0000;
         text-decoration: none;
 }
 div
@@ -18,9 +21,14 @@ div
 	padding:10px;
         margin:10px;
 }
-#page_sidebar
+#leftsidebar
 {
         float:left;
+        width:20%;
+}
+#rightsidebar
+{
+	float:right;
         width:20%;
 }
 
@@ -37,4 +45,10 @@ div
 	float:right;
 		position:relative;
 	top:-100px
+}
+#post{
+	border-style:solid;
+        border-width:1px;
+	padding:10px;
+        margin:10px;
 }

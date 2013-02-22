@@ -64,8 +64,12 @@ def user_login(request):
         return render_to_response('shareit/login.html', {}, context)
 
 @login_required
-def restricted(request):
-	return HttpResponse('Since you are an authenticated user, you can view this restricted page.')
+def followers(request):
+	return HttpResponse('Since you are an authenticated user, you can view your followers.')
+
+@login_required
+def following(request):
+	return HttpResponse('Since you are an authenticated user, you can view users you are followers.')
 
 @login_required
 def user_logout(request):

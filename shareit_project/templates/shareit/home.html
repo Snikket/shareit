@@ -20,8 +20,8 @@
 	<LI> My Categories</LI>
 	<LI> Most Popular</LI>
 	<LI> Least Popular</LI>
-	<LI> Followers</LI>
-	<LI> Following</LI></UL>
+	<LI> <A href="/shareit/followers/">Followers</A> </LI>
+	<LI> <a href="/shareit/following/">Following </a> </LI></UL>
 
 {% endblock %}
 
@@ -49,17 +49,38 @@ function changeFocus(id){
     <br/><br/>
 <!-- drop down menu for categories-->
     <select id="cat">
-	<option value="None">Category</option>
+	{% for cat in cat_list %}
+		<option value="None">Category</option>
+		<option value="cat1">{{cat.name}}</option>
+	{% endfor %}
    </select>
     <input id="b1" type="button" value="ShareIt!"/>
     <br/><br/>
-    <label>Post: </label><lable id="post"></lable>
+    <label>{{user.username}}: </label><lable id="post"></lable>
     <br/><br/>
  </form>
 
 
-
 {% endblock %} 
+
+{% block rightsidebar %}
+
+<!-- drop down menu for filter-->
+	<H4> Filter By: </H4>
+    <select id="filter">
+	<option value="None">Filter</option>
+   </select>
+
+	<br/><br/>
+
+<!-- drop down menu for Post-filter-->
+	<H4> Posts By: </H4>
+	<select id="postfilter">
+		<option value="None">Everyone</option>
+		<option value="None">Following</option>
+	</select>
+
+{% endblock %}
 
 </BODY>
 </HTML>
