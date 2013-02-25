@@ -29,6 +29,9 @@ class Category(models.Model):
 class Post(models.Model):
     category= models.ForeignKey(Category)
     userProfile = models.ForeignKey(UserProfile)
+    postcontents = models.CharField(max_length=500, unique=False)
+    def __unicode__(self):
+        return self.postcontents
 
 class PostForm(forms.ModelForm):
     description = forms.CharField(max_length=1000,
