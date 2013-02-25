@@ -78,6 +78,8 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+AUTH_PROFILE_MODULE = 'shareit.UserProfile'
+
 LOGIN_URL = '/shareit/login'
 
 PASSWORD_HASHERS = (

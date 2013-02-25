@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	url(r'following', views.following, name='following'),
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^category/$', views.category, name='category'),
+        url(r'^profile/$', views.user_profile, name='profle'),
 )

@@ -76,3 +76,11 @@ def user_logout(request):
 	context = RequestContext(request)
 	logout(request)
 	return HttpResponseRedirect('/shareit/')
+
+@login_required
+def user_profile(request):
+        if not request.user.is_authenticated():
+                HttpResponseRedirect('/login/')
+        user = request.user.get_profile
+        context = RequestContext(request,{ 'user': user})
+        return render_to_response('shareit/profile.html', {}, context)
