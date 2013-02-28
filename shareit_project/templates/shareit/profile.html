@@ -4,6 +4,7 @@
 
 	<p> Name: {{ user.username }}</p>
 	<p> Email: {{ user.email }}</p>
+	<p> Image: <img src="{{MEDIA_URL}}{{userprofile.picture}}" />
 	
 
 {% endblock %}

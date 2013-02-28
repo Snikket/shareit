@@ -7,12 +7,15 @@
 {% if cat_list %}
 	<UL>
 	{% for cat in cat_list %}
-		<LI>{{ cat.name }}</LI>
+		<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
 	{% endfor %}
 {% else %}
 	<P> No categories to show. </P>
 {% endif %}
 </BODY>
+
+
+ 
 
 {% endblock %}
 

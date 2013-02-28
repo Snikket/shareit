@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^category/$', views.category, name='category'),
         url(r'^profile/$', views.user_profile, name='profle'),
+        url(r'^cat_post/(?P<cat_name>\w+)', views.cat_post, name='cat_post'),
 )

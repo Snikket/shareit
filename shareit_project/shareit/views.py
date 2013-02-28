@@ -17,6 +17,8 @@ def home(request):
 def category(request):
 	template = loader.get_template('shareit/category.html')
 	cat_list = Category.objects.all()
+	for cat in cat_list:
+                cat_name = cat.name
 	context = RequestContext(request,{ 'cat_list': cat_list})
 	return HttpResponse(template.render(context))
 
@@ -84,3 +86,17 @@ def user_profile(request):
         user = request.user.get_profile
         context = RequestContext(request,{ 'user': user})
         return render_to_response('shareit/profile.html', {}, context)
+
+def cat_post(request, category_name):
+        template = loader.get_template('shareit/cat_post.html')
+        cat_name = decode_category(category_name)
+        context_dict={'cat_name': cat_name}
+        cat = Category.objects.filter(name=cat_name)
+        if cat:
+                posts = Post.objects.filter(category=cat)
+                context_dict['posts']=posts
+        context = RequestContext(request, context_dict)
+        return HttpResponse(template.render(context))
+
+def encode_category(cat_name):
+        return cat_name.replace(' ', '_')

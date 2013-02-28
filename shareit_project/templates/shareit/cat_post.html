@@ -1,0 +1,17 @@
+<HTML>
+{% extends 'shareit/base.html' %}
+<BODY>
+
+<H2> {{category_name}}</H2>
+
+{% if posts %}
+	<UL>
+	{% for post in posts %}
+		<LI> {{post.postcontent}}</LI>
+	{% endfor %}
+{% else %} 
+	<p>No posts.</p>
+{% endif %}
+
+</BODY>
+</HTML>
