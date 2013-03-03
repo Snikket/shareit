@@ -9,19 +9,20 @@
 
 <BODY>
 
-{% extends 'shareit/base.html' %}
+{% extends 'shareit/base-bootstrap.html' %}
 
 {% block sidebar %}
 
-	<H2>Menu</H2>
-	<UL><LI><a href="/shareit/">Home</a> </LI>
+	<ul class="nav nav-tabs nav-stacked span6">
+	<LI><a href="/shareit/">Home</a> </LI>
 	<LI> <a href="/shareit/profile/">My Profile</a></LI>
 	<LI> <a href="/shareit/category/">All Categories </a> </LI>
-	<LI> My Categories</LI>
-	<LI> Most Popular</LI>
-	<LI> Least Popular</LI>
-	<LI> <A href="/shareit/followers/">Followers</A> </LI>
-	<LI> <a href="/shareit/following/">Following </a> </LI></UL>
+	<li><a href="#">My Categories</a></li>
+	<li><a href="#">Most Popular</a></li>
+	<li><a href="#">Least Popular</a></li>
+	<LI><A href="/shareit/followers/">Followers</A> </LI>
+	<LI><a href="/shareit/following/">Following </a> </LI></UL>
+	</ul>
 
 {% endblock %}
 
@@ -47,12 +48,20 @@ function changeFocus(id){
  <form id="myForm" method="post" action="">
     <textarea id="t1" type="text" value="This is a TextBox"></textarea>
     <br/><br/>
-<!-- drop down menu for categories-->
-    <select id="cat">
+
+<div class="btn-group" id="drop">
+  <button class="btn">Category</button>
+  <button class="btn dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
 	{% for cat in cat_list %}
-		<option value="None">Category</option>
-		<option value="cat1">{{cat.name}}</option>
+		<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
 	{% endfor %}
+  </ul>
+</div>
+
+
    </select>
     <input id="b1" type="button" value="ShareIt!"/>
     <br/><br/>
@@ -62,24 +71,6 @@ function changeFocus(id){
 
 {% endblock %} 
 
-{% block rightsidebar %}
-
-<!-- drop down menu for filter-->
-	<H4> Filter By: </H4>
-    <select id="filter">
-	<option value="None">Filter</option>
-   </select>
-
-	<br/><br/>
-
-<!-- drop down menu for Post-filter-->
-	<H4> Posts By: </H4>
-	<select id="postfilter">
-		<option value="None">Everyone</option>
-		<option value="None">Following</option>
-	</select>
-
-{% endblock %}
 
 </BODY>
 </HTML>

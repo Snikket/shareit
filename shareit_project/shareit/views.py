@@ -11,7 +11,10 @@ from shareit.models import Category, Post, Rating
 
 def home(request):
 	template = loader.get_template('shareit/home.html')
-	context = RequestContext(request, {})
+	cat_list = Category.objects.all()
+	for cat in cat_list:
+                cat_name = cat.name
+	context = RequestContext(request, { 'cat_list': cat_list})
 	return HttpResponse(template.render(context))
 
 def category(request):
@@ -81,11 +84,12 @@ def user_logout(request):
 
 @login_required
 def user_profile(request):
+        cat_list = Category.objects.all()
         if not request.user.is_authenticated():
                 HttpResponseRedirect('/login/')
         user = request.user.get_profile
-        context = RequestContext(request,{ 'user': user})
-        return render_to_response('shareit/profile.html', {}, context)
+        context = RequestContext(request,{ 'user': user, 'cat_list': cat_list})
+        return render_to_response('shareit/profile.html', {}, context )
 
 def cat_post(request, category_name):
         template = loader.get_template('shareit/cat_post.html')

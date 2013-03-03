@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>shareit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+         @media (max-width: 980px) {
+                /* Enable use of floated navbar text */
+                .navbar-text.pull-right {
+                  float: none;
+                  padding-left: 5px;
+                  padding-right: 5px;
+                }
+              }
+    </style>
+    <link href="{{STATIC_URL}}bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/shareit/">shareit</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+                                        {% if user.is_authenticated %}
+                                                Welcome {{ user.username }} |
+                                                <a href="/shareit/logout/" class="navbar-link">Logout</A>
+                                        {% else %}
+                                                <a href="/shareit/register/" class="navbar-link">Register</A> |
+                                                <a href="/shareit/login/" class="navbar-link">Login</A>
+                                        {% endif %}
+            </p>
+            <ul class="nav">
+
+                                <li><a href="/shareit/">Home</a></li>
+                                        <li><a href="/shareit/search/">Search</a></li>
+                                        <li><a href="/shareit/restricted" >Restricted</a></li>
+                                        <li><a href="/shareit/about/" >About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+                 {% block sidebar %}
+
+	<ul class="nav nav-tabs nav-stacked span6">
+	<LI><a href="/shareit/">Home</a> </LI>
+	<LI> <a href="/shareit/profile/">My Profile</a></LI>
+	<LI> <a href="/shareit/category/">All Categories </a> </LI>
+	<li><a href="#">My Categories</a></li>
+	<li><a href="#">Most Popular</a></li>
+	<li><a href="#">Least Popular</a></li>
+	<LI><A href="/shareit/followers/">Followers</A> </LI>
+	<LI><a href="/shareit/following/">Following </a> </LI></UL>
+	</ul>
+
+                            {% endblock %}
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span6">
+          <div class="hero-unit">
+                        {% block content %}
+                            {% endblock %}
+          </div>
+        </div><!--/span-->
+	<div class="span3">
+          <div class="well rightsidebar-nav">
+                 {% block rightsidebar %}
+
+			<div class="btn-group" id="drop">
+ 			 <button class="btn">Filter Category</button>
+ 			 <button class="btn dropdown-toggle" data-toggle="dropdown">
+   			 <span class="caret"></span>
+  			</button>
+  			<ul class="dropdown-menu">
+				{% for cat in cat_list %}
+					<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
+				{% endfor %}
+  			</ul>
+			</div>
+
+			<br/><br/>
+
+			<!-- drop down menu for Post-filter-->
+			<div class="btn-group" id="drop">
+ 			 <button class="btn">Filter Users </button>
+ 			 <button class="btn dropdown-toggle" data-toggle="dropdown">
+   			 <span class="caret"></span>
+  			</button>
+  			<ul class="dropdown-menu">
+				<LI>Everyone</LI>
+				<LI>Following</LI>
+
+  			</ul>
+			</div>
+
+		{% endblock %}
+          </div><!--/.well -->
+        </div><!--/span-->
+      </div><!--/row-->
+
+
+     <hr>
+
+      <footer>
+        <p>&copy; ShareIt 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-dropdown.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.com/bootstrap/assets//js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>

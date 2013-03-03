@@ -1,15 +1,18 @@
 <HTML>
-<HEADER><TITLE> ShareIt! </TITLE></HEADER>
+<HEADER>
+<link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+<TITLE> ShareIt! </TITLE></HEADER>
 <BODY>
 	<FORM id="login_form" method="post" action="/shareit/login/">
 	{% csrf_token %}
 		Username:
-			<input type="text" name="username" value="" id="username" size="50"/>
+			<input type="text" name="username" value="" id="username" size="50" placeholder="Username..."/>
 		<br />
 		Password:
-			<input type="password" name="password" value="" id="password" size="50"/>
+			<input type="password" name="password" value="" id="password" size="50" placeholder="Password..."/>
 		<br />
-	<INPUT type="submit" name="submit" value="submit" />
+	<INPUT type="submit" name="Login" value="submit" />
 	</FORM>
+
 </BODY>
 </HTML>

@@ -1,8 +1,10 @@
 <HTML>
 
-{% extends 'shareit/base.html' %}
+{% extends 'shareit/base-bootstrap.html' %}
 
 {% block content %}
+
+<H2> Categories</H2>
 <BODY>
 {% if cat_list %}
 	<UL>
@@ -12,10 +14,8 @@
 {% else %}
 	<P> No categories to show. </P>
 {% endif %}
-</BODY>
 
-
- 
+</BODY> 
 
 {% endblock %}
 
