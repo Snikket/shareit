@@ -1,17 +1,42 @@
 <HTML>
-{% extends 'shareit/base.html' %}
+  <HEADER><TITLE>ShareIt!</TITLE></HEADER>
+  
+  <head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  </head>
+{% extends 'shareit/base-bootstrap.html' %}
 <BODY>
+{% block content %}
+<H2> {{cat_name}}</H2>
 
-<H2> {{category_name}}</H2>
-
-{% if posts %}
-	<UL>
-	{% for post in posts %}
-		<LI> {{post.postcontent}}</LI>
-	{% endfor %}
+{% if posts_list %}
+{% for post in posts_list %}
+<br/>
+<br/>
+<LI><a href="/shareit/users/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+{{post}}
+{%endfor%}
 {% else %} 
-	<p>No posts.</p>
+	<p>Nothing posted in this Category yet :(</p>
 {% endif %}
-
+{% endblock %}
+{% block rightsidebar %}
+			
+			<!-- drop down menu for Post-filter-->
+			<div class="btn-group" id="drop">
+ 			  <button class="btn">Filter Users </button>
+ 			  <button class="btn dropdown-toggle" data-toggle="dropdown">
+   				<span class="caret"></span>
+  			  </button>
+  			  <ul class="dropdown-menu">
+				<LI>Everyone</LI>
+				<LI>Following</LI>
+				
+  			  </ul>
+			</div>
+			
+			{% endblock %}
 </BODY>
 </HTML>

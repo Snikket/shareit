@@ -12,9 +12,11 @@ from shareit.models import Category, Post, Rating
 def home(request):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
+	posts_list=Post.objects.all()
+	
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'cat_list': cat_list})
+	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list})
 	return HttpResponse(template.render(context))
 
 def category(request):
@@ -83,14 +85,16 @@ def user_logout(request):
 	return HttpResponseRedirect('/shareit/')
 
 @login_required
-def user_profile(request):
+def user_profiles(request, name):
         cat_list = Category.objects.all()
         if not request.user.is_authenticated():
                 HttpResponseRedirect('/login/')
-        user = request.user.get_profile
-        context = RequestContext(request,{ 'user': user, 'cat_list': cat_list})
+        userSearched=User.objects.get(username=name)
+        p=UserProfile.objects.get(user=userSearched)
+        picture=p.picture
+        context = RequestContext(request,{ 'picture':picture,'user1': userSearched, 'cat_list': cat_list})
         return render_to_response('shareit/profile.html', {}, context )
-
+        
 def cat_post(request, category_name):
         template = loader.get_template('shareit/cat_post.html')
         cat_name = decode_category(category_name)
@@ -98,9 +102,12 @@ def cat_post(request, category_name):
         cat = Category.objects.filter(name=cat_name)
         if cat:
                 posts = Post.objects.filter(category=cat)
-                context_dict['posts']=posts
+                context_dict['posts_list']=posts
         context = RequestContext(request, context_dict)
         return HttpResponse(template.render(context))
 
 def encode_category(cat_name):
         return cat_name.replace(' ', '_')
+        
+def decode_category(cat_name):
+        return cat_name.replace('_', ' ')

@@ -1,8 +1,5 @@
-<HTML>
-<HEADER>
-<link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
-<TITLE> ShareIt! </TITLE></HEADER>
-<BODY>
+{% extends 'shareit/base-bootstrap.html' %}
+{% block content %}
 	<FORM id="login_form" method="post" action="/shareit/login/">
 	{% csrf_token %}
 		Username:
@@ -14,5 +11,4 @@
 	<INPUT type="submit" name="Login" value="submit" />
 	</FORM>
 
-</BODY>
-</HTML>
+{% endblock %}

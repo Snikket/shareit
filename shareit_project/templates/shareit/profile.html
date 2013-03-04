@@ -1,10 +1,25 @@
 {% extends 'shareit/base-bootstrap.html' %}
 
 {% block content %}
-
-	<p> Name: {{ user.username }}</p>
-	<p> Email: {{ user.email }}</p>
-	<p> Image: <img src="{{MEDIA_URL}}{{userprofile.picture}}" />
+	<h3> {{user1.username }}'s house on ShareIT!</h3>
+	{% if picture %}
+	<img src="{{STATIC_URL}}{{picture}}" width="200" height="150"/>
+	{% else %}
+	<p>{{user1.username}} has not uploaded a photo yet :( </p>
+	{% endif %}
+	<p>username: {{ user1.username }}</p>
+	<p> Email: {{ user1.email }}</p>
+	<br/>
+	<h4> {{user1.username}}'s Posts </h4>
+	{% if posts_list %}
+	{% for post in posts_list %}
+	<br/>
+	<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+	{{post}}
+	{%endfor%}
+	{% else %}
+	<p> {{user1.username}} has not posted anything yet :( Try again later .. </p>
+	{% endif %}
 
 
 {% endblock %}

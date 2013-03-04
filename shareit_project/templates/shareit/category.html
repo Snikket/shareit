@@ -1,4 +1,12 @@
 <HTML>
+  <HEADER><TITLE>ShareIt!</TITLE></HEADER>
+  
+  <head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  </head>
+  
 
 {% extends 'shareit/base-bootstrap.html' %}
 
@@ -9,7 +17,7 @@
 {% if cat_list %}
 	<UL>
 	{% for cat in cat_list %}
-		<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
+		<LI><A HREF="/shareit/cat_post/{{cat.name}}">{{cat.name}}</A></LI>
 	{% endfor %}
 {% else %}
 	<P> No categories to show. </P>

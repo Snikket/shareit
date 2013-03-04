@@ -6,9 +6,11 @@ from django.forms import ModelForm
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    picture = models.ImageField(upload_to='imgs', blank=True)
+    picture = models.ImageField(upload_to='imgs')
     def __unicode__(self):
         return self.user.username
+    def profile_picture(self):
+    	return self.picture
 
 class UserForm(forms.ModelForm):
     class Meta:

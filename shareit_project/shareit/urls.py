@@ -10,6 +10,6 @@ urlpatterns = patterns('',
 	url(r'following', views.following, name='following'),
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^category/$', views.category, name='category'),
-        url(r'^profile/$', views.user_profile, name='profle'),
-        url(r'^cat_post/(?P<cat_name>\w+)', views.cat_post, name='cat_post'),
+    url(r'^profiles/(?P<name>\w+)', views.user_profiles, name='profile'),
+        url(r'^cat_post/(?P<category_name>\w+)', views.cat_post, name='cat_post'),
 )

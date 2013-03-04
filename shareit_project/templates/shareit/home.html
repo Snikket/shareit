@@ -1,76 +1,69 @@
 <HTML>
-<HEADER><TITLE>ShareIt!</TITLE></HEADER>
-
-<head>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-</head>
-
-<BODY>
-
-{% extends 'shareit/base-bootstrap.html' %}
-
-{% block sidebar %}
-
-				<H2>Menu</H2>
-			<div class="container">
-<ul class="nav nav-tabs nav-stacked span3">
-	<LI><a href="/shareit/">Home</a> </LI>
-	<LI> <a href="/shareit/profile/">My Profile</a></LI>
-	<LI> <a href="/shareit/category/">All Categories </a> </LI>
-	<li><a href="#">My Categories</a></li>
-	<li><a href="#">Most Popular</a></li>
-	<li><a href="#">Least Popular</a></li>
-	<LI><A href="/shareit/followers/">Followers</A> </LI>
-	<LI><a href="/shareit/following/">Following </a> </LI>
-</ul>
-</div>
-{% endblock %}
-
-{% block content %}
-
-<!-- This is the code for the text box for users to share their posts -->
-
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $("#b1").click(function(){
-        var value = $("#t1").val();
-        $("#post").html(value);
-        return false;
-    });
-    $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
-});
-function changeFocus(id){
-    var v = "#" + id;
-    $(v).focus();
-}
-</script>
- <form id="myForm" method="post" action="">
-    <textarea id="t1" type="text" value="This is a TextBox"></textarea>
-    <br/><br/>
-
-<div class="btn-group" id="drop">
-  <button class="btn">Category</button>
-  <button class="btn dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-	{% for cat in cat_list %}
-		<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
-	{% endfor %}
-  </ul>
-</div>
-
-
-   </select>
-    <input id="b1" type="button" value="ShareIt!"/>
-    <br/><br/>
-    <label>{{user.username}}: </label><lable id="post"></lable>
-    <br/><br/>
- </form>
-
+  <HEADER><TITLE>ShareIt!</TITLE></HEADER>
+  
+  <head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  </head>
+  
+  <BODY>
+	
+	{% extends 'shareit/base-bootstrap.html' %}
+	
+	
+	
+	{% block content %}
+	
+	<!-- This is the code for the text box for users to share their posts -->
+	
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+	  $(document).ready(function() {
+      $("#b1").click(function(){
+      var value = $("#t1").val();
+      $("#post").html(value);
+      return false;
+      });
+      $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
+	  });
+	  function changeFocus(id){
+      var v = "#" + id;
+      $(v).focus();
+	  }
+	</script>
+	<form id="myForm" method="post" action="">
+      <textarea id="t1" type="text" value="This is a TextBox"></textarea>
+      <br/><br/>
+	  
+	  <div class="btn-group" id="drop">
+		<button class="btn">Category</button>
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+		  {% for cat in cat_list %}
+		  <LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
+		  {% endfor %}
+		</ul>
+	  </div>
+	  
+	  
+</select>
+<input id="b1" type="button" value="ShareIt!"/>
+<br/><br/>
+<label>{{user.username}}: </label><lable id="post"></lable>
+<br/><br/>
+</form>
+<h5> POSTS </h5>
+{% if posts_list %}
+{% for post in posts_list %}
+<br/>
+<br/>
+<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+{{post}}
+{%endfor%}
+{%endif%}
 {% endblock %} 
 
 
