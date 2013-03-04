@@ -30,14 +30,18 @@
                 <DIV id ="leftsidebar">
                         {% block sidebar %}
 				<H2>Menu</H2>
-				<UL><LI><a href="/shareit/">Home</a> </LI>
-				<LI> <a href="/shareit/profile/">My Profile</a></LI>
-				<LI> <a href="/shareit/category/">All Categories </a> </LI>
-				<LI> My Categories </LI>
-				<LI> Most Popular</LI>
-				<LI> Least Popular</LI>
-				<LI> <A href="/shareit/followers/">Followers</A> </LI>
-				<LI> <a href="/shareit/following/">Following </a> </LI></UL>
+			<div class="container">
+<ul class="nav nav-tabs nav-stacked span3">
+	<LI><a href="/shareit/">Home</a> </LI>
+	<LI> <a href="/shareit/profile/">My Profile</a></LI>
+	<LI> <a href="/shareit/category/">All Categories </a> </LI>
+	<li><a href="#">My Categories</a></li>
+	<li><a href="#">Most Popular</a></li>
+	<li><a href="#">Least Popular</a></li>
+	<LI><A href="/shareit/followers/">Followers</A> </LI>
+	<LI><a href="/shareit/following/">Following </a> </LI>
+</ul>
+</div>
 
 			{% endblock %}
                 </DIV>
