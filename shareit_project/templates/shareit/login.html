@@ -1,5 +1,6 @@
 {% extends 'shareit/base-bootstrap.html' %}
 {% block content %}
+	<center>
 	<FORM id="login_form" method="post" action="/shareit/login/">
 	{% csrf_token %}
 		Username:
@@ -8,7 +9,17 @@
 		Password:
 			<input type="password" name="password" value="" id="password" size="50" placeholder="Password..."/>
 		<br />
-	<INPUT type="submit" name="Login" value="submit" />
+
+
+			<p >
+		</br>
+				<INPUT type="submit" name="Login" value="Log in!" class="btn btn-primary btn-large"/>
+
+				</a>
+
+			  </p>
+
 	</FORM>
+			</center>
 
 {% endblock %}

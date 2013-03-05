@@ -1,8 +1,19 @@
-<BODY>
+
+{% extends 'shareit/base-bootstrap.html' %}
+{% block content %}
 {% if registered %}
-	<A href="/shareit/">Thanks for registering with ShareIt.</A>
+<center>
+	<A href="/shareit/">Thanks for registering with share.it. </A>
+</center>
+	<p>
+		<center>
+				<a href="/shareit/login" class="btn btn-primary btn-large">
+				  Log in!
+				</a>
+				</center>
+			  </p>
 {% else %}
-	Register Here!
+	<h3>Register Here!</h3>
 	<FORM id="user_form" method="post" action="/shareit/register/">
 		{% csrf_token %}
 		{{ uform.as_p }}
@@ -10,4 +21,4 @@
 		<INPUT type="Submit" name="Submit" value="Submit" />
 	</FORM>
 {% endif %}
-</BODY>
+{% endblock %}
