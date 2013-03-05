@@ -12,4 +12,6 @@ urlpatterns = patterns('',
 	url(r'^category/$', views.category, name='category'),
     url(r'^profiles/(?P<name>\w+)', views.user_profiles, name='profile'),
         url(r'^cat_post/(?P<category_name>\w+)', views.cat_post, name='cat_post'),
+        url(r'^add_post/$', views.add_post, name='add_post'),
+
 )

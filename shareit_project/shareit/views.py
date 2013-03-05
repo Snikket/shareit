@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from shareit.models import Category, Post, Rating
 
+
+
+
 def home(request):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
@@ -69,6 +72,18 @@ def user_login(request):
     else:
         # the login is a GET request, so just show the user the login form.
         return render_to_response('shareit/login.html', {}, context)
+
+@login_required
+def add_post(request):
+	# get the username request.user
+	# get the user object
+	# if request.POST:
+		# request.POST['']
+		# create a new post..
+		# save that post
+
+	return home(request)
+
 
 @login_required
 def followers(request):

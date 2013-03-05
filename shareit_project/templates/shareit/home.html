@@ -19,12 +19,13 @@
 	
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
+
 	  $(document).ready(function() {
-      $("#b1").click(function(){
-      var value = $("#t1").val();
-      $("#post").html(value);
-      return false;
-      });
+      		//$("#b1").click(function(){
+      		//var value = $("#t1").val();
+      		//$("#post").html(value);
+     		
+      	  });
       $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
 	  });
 	  function changeFocus(id){
@@ -32,29 +33,28 @@
       $(v).focus();
 	  }
 	</script>
-	<form id="myForm" method="post" action="">
-      <textarea id="t1" type="text" value="This is a TextBox"></textarea>
-      <br/><br/>
+	<form id="myForm" method="post" action="/shareit/add_post/">
+	 {% csrf_token %}
+      		<textarea id="t1" type="text" value="This is a TextBox"></textarea>
+      		<br/><br/>
+	  	<div class="btn-group" id="drop">
+			<button class="btn">Category</button>
+			<button class="btn dropdown-toggle" data-toggle="dropdown">
+		  	<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+		  	{% for cat in cat_list %}
+		  	<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
+		  	{% endfor %}
+			</ul>
+	  	</div>
 	  
-	  <div class="btn-group" id="drop">
-		<button class="btn">Category</button>
-		<button class="btn dropdown-toggle" data-toggle="dropdown">
-		  <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-		  {% for cat in cat_list %}
-		  <LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
-		  {% endfor %}
-		</ul>
-	  </div>
-	  
-	  
-</select>
-<input id="b1" type="button" value="ShareIt!"/>
-<br/><br/>
-<label>{{user.username}}: </label><lable id="post"></lable>
-<br/><br/>
-</form>
+	  	<input id="b1" value="ShareIt!" type="submit"/>
+		<br/><br/>
+		<label>{{user.username}}: </label><label id="post"></label>
+		<br/><br/>
+	</form>
+
 <h5> POSTS </h5>
 {% if posts_list %}
 {% for post in posts_list %}
