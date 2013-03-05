@@ -97,32 +97,27 @@
           <div class="well rightsidebar-nav">
             {% block rightsidebar %}
 			
+			<!-- Drop down for categoryFiler-->
+			<label>Filter posts by:</label>
 			<div class="btn-group" id="drop">
- 			  <button class="btn">Filter Category</button>
- 			  <button class="btn dropdown-toggle" data-toggle="dropdown">
-   				<span class="caret"></span>
-  			  </button>
-  			  <ul class="dropdown-menu">
+				<select id="filterCat" name="catFilter">
+				<option value="">-- No Filter --</option>
 				{% for cat in cat_list %}
-				<LI><A HREF="/shareit/cat_post/{{cat.name}}">{{cat.name}}</A></LI>
+					<option value="catid">{{cat.name}}</option>
 				{% endfor %}
-  			  </ul>
-			</div>
-			
+				</select>
+	  		</div>	
+		
 			<br/><br/>
-			
-			<!-- drop down menu for Post-filter-->
+
+			<!-- Drop down for categoryFiler-->
+			<label>Show posts by:</label>
 			<div class="btn-group" id="drop">
- 			  <button class="btn">Filter Users </button>
- 			  <button class="btn dropdown-toggle" data-toggle="dropdown">
-   				<span class="caret"></span>
-  			  </button>
-  			  <ul class="dropdown-menu">
-				<LI>Everyone</LI>
-				<LI>Following</LI>
-				
-  			  </ul>
-			</div>
+				<select id="filterUser" name="userFilter">			
+				<option value="E">Everyone</option>
+				<option value="F">Following</option>
+				</select>
+	  		</div>	
 			
 			{% endblock %}
           </div><!--/.well -->

@@ -20,18 +20,18 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
 
-	  $(document).ready(function() {
-      		//$("#b1").click(function(){
-      		//var value = $("#t1").val();
-      		//$("#post").html(value);
-     		
-      	  });
-      $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
-	  });
-	  function changeFocus(id){
-      var v = "#" + id;
-      $(v).focus();
-	  }
+	$(document).ready(function() {
+		//$("#b1").click(function(){
+			//var value = $("#t1").val();
+			//$("#post").html(value);
+		//});
+		$("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
+	});
+
+	function changeFocus(id){
+		var v = "#" + id;
+		$(v).focus();
+	}
 	</script>
 
 	<form id="myForm" method="post" action="/shareit/add_post/">
@@ -39,17 +39,13 @@
       		<textarea id="t1" type="text" value="This is a TextBox"></textarea>
       		<br/><br/>
 	  	<div class="btn-group" id="drop">
-			<button class="btn">Category</button>
-			<button class="btn dropdown-toggle" data-toggle="dropdown">
-		  	<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-		  	{% for cat in cat_list %}
-		  	<LI><A HREF="/shareit/cat/{{cat.name}}">{{cat.name}}</A></LI>
-		  	{% endfor %}
-			</ul>
-	  	</div>
-	  
+			<select id="catList" name="catList">
+			<option value="">-- Category --</option>
+			{% for cat in cat_list %}
+				<option value="catid">{{cat.name}}</option>
+			{% endfor %}
+			</select>
+	  	</div>		
 	  	<input id="b1" value="ShareIt!" type="submit"/>
 		<br/><br/>
 		<label>{{user.username}}: </label><label id="post"></label>
