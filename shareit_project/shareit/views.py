@@ -111,7 +111,8 @@ def user_profiles(request, name):
         userSearched=User.objects.get(username=name)
         p=UserProfile.objects.get(user=userSearched)
         picture=p.picture
-        context = RequestContext(request,{ 'picture':picture,'user1': userSearched, 'cat_list': cat_list})
+        posts=Post.objects.filter(userProfile=p)
+        context = RequestContext(request,{ 'picture':picture,'user1': userSearched, 'cat_list': cat_list, 'posts_list':posts})
         return render_to_response('shareit/profile.html', {}, context )
         
 def cat_post(request, category_name):

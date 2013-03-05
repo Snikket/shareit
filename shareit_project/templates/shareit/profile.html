@@ -5,7 +5,8 @@
 	{% if picture %}
 	<img src="{{STATIC_URL}}{{picture}}" width="200" height="150"/>
 	{% else %}
-	<p>{{user1.username}} has not uploaded a photo yet :( </p>
+	<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="200" height="150"/>
+	No profile photo yet :(
 	{% endif %}
 	<p>username: {{ user1.username }}</p>
 	<p> Email: {{ user1.email }}</p>

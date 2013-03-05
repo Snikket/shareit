@@ -33,6 +33,7 @@
       $(v).focus();
 	  }
 	</script>
+
 	<form id="myForm" method="post" action="/shareit/add_post/">
 	 {% csrf_token %}
       		<textarea id="t1" type="text" value="This is a TextBox"></textarea>
@@ -55,12 +56,18 @@
 		<br/><br/>
 	</form>
 
+
 <h5> POSTS </h5>
 {% if posts_list %}
 {% for post in posts_list %}
 <br/>
 <br/>
-<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+{% if post.userProfile.picture %}
+<a href="/shareit/profiles/{{post.userProfile}}"><img  src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
+{% else %}
+<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
+{%endif%}
+<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a>
 {{post}}
 {%endfor%}
 {%endif%}
