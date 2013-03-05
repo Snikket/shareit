@@ -72,11 +72,15 @@ def user_login(request):
 
 @login_required
 def followers(request):
-	return HttpResponse('Since you are an authenticated user, you can view your followers.')
+	template = loader.get_template('shareit/followers.html')
+	context = RequestContext(request, {})
+	return HttpResponse(template.render(context))
 
 @login_required
 def following(request):
-	return HttpResponse('Since you are an authenticated user, you can view users you are followers.')
+	template = loader.get_template('shareit/following.html')
+	context = RequestContext(request, {})
+	return HttpResponse(template.render(context))
 
 @login_required
 def user_logout(request):
