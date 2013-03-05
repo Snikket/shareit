@@ -15,7 +15,7 @@ from shareit.models import Category, Post, Rating
 def home(request):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
-	posts_list=Post.objects.all()
+	posts_list=Post.objects.all().order_by('-id')
 	
 	for cat in cat_list:
                 cat_name = cat.name
@@ -80,14 +80,9 @@ def add_post(request):
 	p=UserProfile.objects.get(user=o)
 	if request.method == 'POST':
 		text = request.POST['post']
-		newPost = Post(category=Category.objects.get(name="Food"), userProfile=p, postcontents=text)
+		cat = request.POST['catList']
+		newPost = Post(category=Category.objects.get(name=cat), userProfile=p, postcontents=text)
 		newPost.save()
-		
-		
-		
-		
-		
-		
 		# create a new post..
 		# save that post
 	#return home(request)
