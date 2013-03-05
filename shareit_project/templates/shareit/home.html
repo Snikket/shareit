@@ -35,7 +35,6 @@
 	<form id="myForm" method="post" action="">
       <textarea id="t1" type="text" value="This is a TextBox"></textarea>
       <br/><br/>
-	  
 	  <div class="btn-group" id="drop">
 		<button class="btn">Category</button>
 		<button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -52,7 +51,9 @@
 </select>
 <input id="b1" type="button" value="ShareIt!"/>
 <br/><br/>
-<label>{{user.username}}: </label><lable id="post"></lable>
+<label>{{user.username}}: </label><h1 id="post"></h1>
+
+
 <br/><br/>
 </form>
 <h5> POSTS </h5>
@@ -60,7 +61,12 @@
 {% for post in posts_list %}
 <br/>
 <br/>
-<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+{% if post.userProfile.picture %}
+<a href="/shareit/profiles/{{post.userProfile}}"><img  src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
+{% else %}
+<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
+{%endif%}
+<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a>
 {{post}}
 {%endfor%}
 {%endif%}
