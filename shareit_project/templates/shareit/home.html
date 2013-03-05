@@ -36,7 +36,7 @@
 
 	<form id="myForm" method="post" action="/shareit/add_post/">
 	 {% csrf_token %}
-      		<textarea id="t1" type="text" value="This is a TextBox"></textarea>
+      		<textarea id="t1" name="post" type="text" value="This is a TextBox"></textarea>
       		<br/><br/>
 	  	<div class="btn-group" id="drop">
 			<select id="catList" name="catList">
@@ -46,7 +46,7 @@
 			{% endfor %}
 			</select>
 	  	</div>		
-	  	<input id="b1" value="ShareIt!" type="submit"/>
+	  	<input id="b1" value="Share it !" name="submit" type="submit"/>
 		<br/><br/>
 		<label>{{user.username}}: </label><label id="post"></label>
 		<br/><br/>

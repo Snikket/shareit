@@ -75,16 +75,24 @@ def user_login(request):
 
 @login_required
 def add_post(request):
-	# get the username request.user
-	# get the user object
-	# if request.POST:
-		# request.POST['']
+	o=User.objects.get(username=request.user.username)
+	username=request.user.username
+	p=UserProfile.objects.get(user=o)
+	if request.method == 'POST':
+		text = request.POST['post']
+		newPost = Post(category=Category.objects.get(name="Food"), userProfile=p, postcontents=text)
+		newPost.save()
+		
+		
+		
+		
+		
+		
 		# create a new post..
 		# save that post
-
-	return home(request)
-
-
+	#return home(request)
+	return HttpResponseRedirect('/shareit/')
+	
 @login_required
 def followers(request):
 	template = loader.get_template('shareit/followers.html')
