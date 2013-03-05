@@ -22,6 +22,13 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['picture']
 
+class Followers(models.Model):
+	fuser = models.ForeignKey(User)
+	follows = models.ForeignKey(User, related_name='followedUser')
+	def __unicode__(self):
+		return self.fuser.username
+
+
 class Category(models.Model):
     name = models.CharField(max_length=128,
                            unique=True)

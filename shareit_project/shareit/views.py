@@ -7,8 +7,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from shareit.models import Category, Post, Rating
-
+from shareit.models import Category, Post, Rating, Followers
 
 
 
@@ -91,14 +90,19 @@ def add_post(request):
 @login_required
 def followers(request):
 	template = loader.get_template('shareit/followers.html')
-	context = RequestContext(request, {})
+	o=User.objects.get(username=request.user.username)
+	following_list = Followers.objects.filter(follows=o)
+	context = RequestContext(request, {'following_list':following_list})
 	return HttpResponse(template.render(context))
 
 @login_required
 def following(request):
 	template = loader.get_template('shareit/following.html')
-	context = RequestContext(request, {})
+	o=User.objects.get(username=request.user.username)
+	following_list = Followers.objects.filter(fuser=o)
+	context = RequestContext(request, {'following_list':following_list})
 	return HttpResponse(template.render(context))
+	
 
 @login_required
 def user_logout(request):
