@@ -9,13 +9,17 @@
 {% extends 'shareit/base-bootstrap.html' %}
 <BODY>
 {% block content %}
-<H2> {{cat_name}}</H2>
+<form id="myForm" method="post" action="/shareit/category/">
+	 {% csrf_token %}
+	  	<input id="b1" value="<--Back To Categories" name="submit" type="submit"/>	
+	</form>
 
+<H2> {{cat_name}}</H2>
 {% if posts_list %}
 {% for post in posts_list %}
 <br/>
 <br/>
-<LI><a href="/shareit/users/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
+<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
 {{post}}
 {%endfor%}
 {% else %} 
