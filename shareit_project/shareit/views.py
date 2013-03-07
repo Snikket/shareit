@@ -7,14 +7,23 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from shareit.models import Category, Post, Rating, Followers, postComment
-
-
+from shareit.models import Category, Post, Followers, postComment
 
 def home(request):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
 	posts_list=Post.objects.all().order_by('-id')
+	comments_list=postComment.objects.all().order_by('-id')
+	for cat in cat_list:
+                cat_name = cat.name
+	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list})
+	return HttpResponse(template.render(context))
+
+def filteredhome(request, name):
+	template = loader.get_template('shareit/home.html')
+	cat_list = Category.objects.all()
+	cat = Category.objects.filter(name=name)
+	posts_list=Post.objects.filter(category=cat).order_by('-id')
 	comments_list=postComment.objects.all().order_by('-id')
 	for cat in cat_list:
                 cat_name = cat.name
@@ -138,3 +147,39 @@ def encode_category(cat_name):
         
 def decode_category(cat_name):
         return cat_name.replace('_', ' ')
+
+@login_required
+def tup_post(request):
+	context = RequestContext(request)
+	post_id = None
+	if request.method == 'GET':
+		post_id = request.GET['post.id']
+	else:
+		post_id = request.GET['post.id']
+
+	thumbsup=0
+	if post_id:
+		p = Post.objects.get(id=int(post_id))
+		if p:
+			thumbsup = p.thumbsup + 1
+			p.thumbsup = thumbsup
+			p.save()
+	return HttpResponse(thumbsup)
+
+@login_required
+def tdown_post(request):
+	context = RequestContext(request)
+	post_id = None
+	if request.method == 'GET':
+		post_id = request.GET['post.id']
+	else:
+		post_id = request.GET['post.id']
+
+	thumbsdown=0
+	if post_id:
+		p = Post.objects.get(id=int(post_id))
+		if p:
+			thumbsdown = p.thumbsdown + 1
+			p.thumbsdown = thumbsdown
+			p.save()
+	return HttpResponse(thumbsdown)

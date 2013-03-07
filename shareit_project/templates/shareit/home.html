@@ -19,6 +19,27 @@
 	{% if user.is_authenticated %}
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
+
+	
+	$("#thumbsup").click(function(){
+		var postid;
+		postid = $(this).attr("post.id");
+		$.get('/shareit/post_tu', {post.id: postid}, function(data){
+			$('#thumbsup_count').html(data);
+               		$('#thumbsup').hide();
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#thumbsdown').click(function(){
+			var postid;
+			postid = $(this).attr("post.id");
+			$.get('/shareit/post_tdown', {post.id: postid}, function(data){
+				$('#thumbsdown_count').html(data);
+		       		$('#thumbsdown').hide();
+			});
+		});
+	});
 	  
 	  $(document).ready(function() {
 	  //$("#b1").click(function(){
@@ -68,16 +89,25 @@
 		{%endif%}
 		<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
 		<div class="well"> {{post}}</div>
-		<div class="btn-group" id="drop">
-				<select id="filterCat" name="catFilter">
-				<option value="">-- Comments --</option>
-				{% for comment in comments_list %}
-					{% if comment.cPost = post %}
-					<option value="commentid">{{comment.cPost}}{{post}}</option>
-					{%endif%}
-				{% endfor %}
-				</select>
-	  		</div>	
+		
+		<!-- Thumbs-up and Thumbs-down button -->
+		<div>
+		<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
+		<b id="tdown_count">{{ thumbsdown }}</b> people dont like this.
+		<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
+		<b id="tup_count">{{ thumbsup }}</b> people like this.
+		</div>
+
+			<div class="btn-group" id="drop">
+					<select id="filterCat" name="catFilter">
+					<option value="">-- Comments --</option>
+					{% for comment in comments_list %}
+						{% if comment.cPost = post %}
+						<option value="commentid">{{comment.cPost}}{{post}}</option>
+						{%endif%}
+					{% endfor %}
+					</select>
+		  	</div>
 	</div>
 	{%endfor%}
 	{%endif%}

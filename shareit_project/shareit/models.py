@@ -39,6 +39,9 @@ class Post(models.Model):
     category= models.ForeignKey(Category)
     userProfile = models.ForeignKey(UserProfile)
     postcontents = models.CharField(max_length=500, unique=False)
+    thumbsup = models.IntegerField()
+    thumbsdown = models.IntegerField()
+
     def __unicode__(self):
         return self.postcontents
 
@@ -54,11 +57,4 @@ class PostForm(forms.ModelForm):
                                   help_text='Please enter a description for this post.')
     class Meta:
         model=Post
-
-   
-class Rating(models.Model):
-    post = models.ForeignKey(Post)
-    value = models.IntegerField(default=0)
-    def __unicode__(self):
-        return self.value
 

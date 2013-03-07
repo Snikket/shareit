@@ -28,18 +28,14 @@
 {% endblock %}
 {% block rightsidebar %}
 			
-			<!-- drop down menu for Post-filter-->
+			<!-- Drop down for categoryFiler-->
+			<label>Show posts by:</label>
 			<div class="btn-group" id="drop">
- 			  <button class="btn">Filter Users </button>
- 			  <button class="btn dropdown-toggle" data-toggle="dropdown">
-   				<span class="caret"></span>
-  			  </button>
-  			  <ul class="dropdown-menu">
-				<LI>Everyone</LI>
-				<LI>Following</LI>
-				
-  			  </ul>
-			</div>
+				<select id="filterUser" name="userFilter">			
+				<option value="E">Everyone</option>
+				<option value="F">Following</option>
+				</select>
+	  		</div>	
 			
 			{% endblock %}
 </BODY>

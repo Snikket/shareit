@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.db import models
-from shareit.models import Category, Post, Rating, UserProfile, Followers, postComment
+from shareit.models import Category, Post, UserProfile, Followers, postComment
 
 admin.site.register(Category)
-admin.site.register(Rating)
 admin.site.register(UserProfile)
 admin.site.register(postComment)
 class FollowInterface(admin.ModelAdmin):
