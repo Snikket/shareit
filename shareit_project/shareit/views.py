@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from shareit.models import Category, Post, Rating, Followers
+from shareit.models import Category, Post, Rating, Followers, postComment
 
 
 
@@ -15,10 +15,10 @@ def home(request):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
 	posts_list=Post.objects.all().order_by('-id')
-	
+	comments_list=postComment.objects.all().order_by('-id')
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list})
+	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list})
 	return HttpResponse(template.render(context))
 
 def category(request):

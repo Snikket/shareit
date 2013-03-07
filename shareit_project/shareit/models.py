@@ -42,6 +42,13 @@ class Post(models.Model):
     def __unicode__(self):
         return self.postcontents
 
+class postComment(models.Model):
+	text = models.CharField(max_length=1000, unique=False)
+	cUser=models.ForeignKey(UserProfile)
+	cPost=models.ForeignKey(Post)
+	def __unicode__(self):
+		return self.text
+
 class PostForm(forms.ModelForm):
     description = forms.CharField(max_length=1000,
                                   help_text='Please enter a description for this post.')
