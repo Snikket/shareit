@@ -1,10 +1,14 @@
 {% extends 'shareit/base-bootstrap.html' %}
 
 {% block content %}
-
 	<!-- Add the check! .. If not following user, show button. If they are, hide button-->
-	<p align="right"><a href="#" class="btn btn-info btn-small"><i class="icon-white icon-plus"></i> Follow </a></p>
-
+	{% ifnotequal  currentUser user1.username %}
+	{% if user1.id in followingList %}
+	<p align="right"><a href="/shareit/unfollowUser/{{user1.username}}" class="btn btn-info btn-small"><i class="icon-white icon-plus"></i> Unfollow </a></p>
+	{% else %}
+	<p align="right"><a href="/shareit/followUser/{{user1.username}}" class="btn btn-info btn-small"><i class="icon-white icon-plus"></i> Follow </a></p>
+	{% endif%}
+	{% endifnotequal%}
 	<h3> {{user1.username }}'s house on ShareIT!</h3>
 	{% if picture %}
 	<img src="{{STATIC_URL}}{{picture}}" width="200" height="150"/>

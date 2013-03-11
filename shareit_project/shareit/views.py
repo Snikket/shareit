@@ -19,6 +19,17 @@ def home(request):
 	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
 	return HttpResponse(template.render(context))
 
+def followUser(request, username):
+	userToFollow=User.objects.get(username=username)
+	newFollower = Followers(fuser=request.user, follows=userToFollow)
+	newFollower.save()
+	return HttpResponseRedirect('/shareit/profiles/'+username)
+
+def unfollowUser(request, username):
+	userToUnfollow=User.objects.get(username=username)
+	u = Followers.objects.get(fuser=request.user, follows=userToUnfollow).delete()
+	return HttpResponseRedirect('/shareit/profiles/'+username)
+	
 def filteredhome(request, name):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
@@ -121,15 +132,17 @@ def user_logout(request):
 
 @login_required
 def user_profiles(request, name):
-        cat_list = Category.objects.all()
-        if not request.user.is_authenticated():
-                HttpResponseRedirect('/login/')
-        userSearched=User.objects.get(username=name)
-        p=UserProfile.objects.get(user=userSearched)
-        picture=p.picture
-        posts=Post.objects.filter(userProfile=p)
-        context = RequestContext(request,{ 'picture':picture,'user1': userSearched, 'cat_list': cat_list, 'posts_list':posts})
-        return render_to_response('shareit/profile.html', {}, context )
+		currentUser=request.user.username
+		cat_list = Category.objects.all()
+		if not request.user.is_authenticated():
+			HttpResponseRedirect('/login/')
+		userSearched=User.objects.get(username=name)
+		followingList =Followers.objects.filter(fuser=request.user).values_list('follows', flat=True)
+		p=UserProfile.objects.get(user=userSearched)
+		picture=p.picture
+		posts=Post.objects.filter(userProfile=p)
+		context = RequestContext(request,{'followingList':followingList, 'currentUser':currentUser, 'picture':picture, 'user1': userSearched, 'cat_list': cat_list, 'posts_list':posts})
+		return render_to_response('shareit/profile.html', {}, context )
         
 def cat_post(request, category_name):
         template = loader.get_template('shareit/cat_post.html')
