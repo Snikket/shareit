@@ -6160,6 +6160,6 @@ body {
  margin: 0;
  background-image: url(http://brokeassstuart.com/wp-content/pictsnShit/2013/01/NYSkyline.jpg);
  background-size: 1640px 1000px;
- background-repeat:no-repeat;
+ background-repeat:repeat;
  display: compact;
  font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;

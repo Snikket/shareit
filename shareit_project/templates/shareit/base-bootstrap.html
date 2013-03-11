@@ -104,10 +104,14 @@
 			<!-- Drop down for categoryFiler-->
 			<label>Filter posts by:</label>
 			<div class="btn-group" id="drop">
-				<select id="filterCat" name="catFilter">
-				<option value="">-- No Filter --</option>
+			<select 
+
+				<select onchange="top.location.href = '/shareit/cat_filter/'+ this.options[ this.selectedIndex ].value" id="filterCat" name="catFilter"  >
+
+				
+				<option value="">{{default_filter}}</option>
 				{% for cat in cat_list %}
-					<option value="catid">{{cat.name}}</option>
+				<option value={{cat.name}}>{{cat.name}}</option>
 				{% endfor %}
 				</select>
 	  		</div>	

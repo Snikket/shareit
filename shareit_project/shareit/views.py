@@ -16,18 +16,18 @@ def home(request):
 	comments_list=postComment.objects.all().order_by('-id')
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list})
+	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
 	return HttpResponse(template.render(context))
 
 def filteredhome(request, name):
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
-	cat = Category.objects.filter(name=name)
-	posts_list=Post.objects.filter(category=cat).order_by('-id')
+	category = Category.objects.filter(name=name)
+	posts_list=Post.objects.filter(category=category).order_by('-id')
 	comments_list=postComment.objects.all().order_by('-id')
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list})
+	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter':category[0].name})
 	return HttpResponse(template.render(context))
 
 def category(request):
