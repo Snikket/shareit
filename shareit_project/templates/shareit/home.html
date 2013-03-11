@@ -1,5 +1,7 @@
 <HTML>
 
+	{% extends 'shareit/base-bootstrap.html' %}
+
   <HEADER><TITLE>{{title}}</TITLE></HEADER>
   
   <head>
@@ -9,10 +11,6 @@
   </head>
   
   <BODY>
-	
-	{% extends 'shareit/base-bootstrap.html' %}
-	
-	
 	
 	{% block content %}
 	
@@ -54,11 +52,12 @@
 	  var v = "#" + id;
 	  $(v).focus();
 	  }
+
 	</script>
 	
 	<form id="myForm" method="post" action="/shareit/add_post/">
 	  {% csrf_token %}
-      <textarea id="t1" name="post" type="text" value="This is a TextBox"></textarea>
+      <textarea id="t1" name="post" type="text" value="This is a TextBox" class="input-block-level" rows="5"></textarea>
       <br/><br/>
 	  <div class="btn-group" id="drop">
 		<select id="catList" name="catList">
@@ -78,7 +77,6 @@
 	</div>
 	{% endif %}
 	
-	
 	<h4> POSTS </h4>
 	{% if posts_list %}
 	{% for post in posts_list %}
@@ -89,26 +87,32 @@
 		<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
 		{%endif%}
 		<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
-		<div class="well"> {{post}}</div>
+		<div id="userPost" name="userPost" class="well"> {{post}}</div>
 		
 		<!-- Thumbs-up and Thumbs-down button -->
-		<div>
+		<div align="right">
 		<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
-		<b id="tdown_count">{{ thumbsdown }}</b> people dont like this.
+		<b id="tdown_count">{{ thumbsdown }}</b> 
 		<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
-		<b id="tup_count">{{ thumbsup }}</b> people like this.
+		<b id="tup_count">{{ thumbsup }}</b> 
 		</div>
 
-			<div class="btn-group" id="drop">
-					<select id="filterCat" name="catFilter">
-					<option value="">-- Comments --</option>
-					{% for comment in comments_list %}
-						{% if comment.cPost = post %}
-						<option value="commentid">{{comment.cPost}}{{post}}</option>
-						{%endif%}
-					{% endfor %}
-					</select>
-		  	</div>
+		<form id="myForm2" method="post" action="/shareit/add_comment/">
+		{% csrf_token %}
+		<div class="btn-group" id="drop">
+			<select id="comments" name="comments">
+			<option value="">-- Comments --</option>
+			{% for comment in comments_list %}
+				{% if comment.cPost = post %}
+					<option value="commentid">{{comment}}</option>
+				{%endif%}
+			{% endfor %}
+			</select>
+		  </div>
+		<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
+		<input id="b2" value="Comment" name="submit" type="submit"/>
+		<br/><br/>
+		</form>
 	</div>
 	{%endfor%}
 	{%endif%}
