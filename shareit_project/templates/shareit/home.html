@@ -95,12 +95,13 @@
 			</div>
 			{% endif %}
 
+
 			<!-- Thumbs-up and Thumbs-down button -->
 			<div align="right">
 				<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
-				<b id="tdown_count">{{ thumbsdown }}</b> 
+				<b id="tdown_count">{{ post.thumbsdown }}</b> 
 				<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
-				<b id="tup_count">{{ thumbsup }}</b> 
+				<b id="tup_count">{{ post.thumbsup }}</b> 
 			</div>
 
 			<form id="myForm2" method="post" action="/shareit/add_comment/">
