@@ -8,15 +8,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from shareit.models import Category, Post, Followers, postComment
+import urllib
+import BeautifulSoup
 
 def home(request):
+	soup = BeautifulSoup.BeautifulSoup(urllib.urlopen("https://www.google.com"))
+	title= soup.title.string
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
 	posts_list=Post.objects.all().order_by('-id')
 	comments_list=postComment.objects.all().order_by('-id')
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
+	context = RequestContext(request, { 'title':title,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
 	return HttpResponse(template.render(context))
 
 def followUser(request, username):
