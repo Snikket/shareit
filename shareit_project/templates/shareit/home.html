@@ -17,26 +17,6 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script type="text/javascript">
 
-	$("#thumbsup").click(function(){
-		var postid;
-		postid = $(this).attr("post.id");
-		$.get('/shareit/post_tu', {post.id: postid}, function(data){
-			$('#thumbsup_count').html(data);
-			$('#thumbsup').hide();
-		});
-	});
-
-	$(document).ready(function() {
-		$('#thumbsdown').click(function(){
-		var postid;
-		postid = $(this).attr("post.id");
-		$.get('/shareit/post_tdown', {post.id: postid}, function(data){
-			$('#thumbsdown_count').html(data);
-			$('#thumbsdown').hide();
-		});
-		});
-	});
-
 	$(document).ready(function() {
 	//$("#b1").click(function(){
 	//var value = $("#t1").val();
@@ -98,10 +78,11 @@
 
 			<!-- Thumbs-up and Thumbs-down button -->
 			<div align="right">
-				<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
+				<a id="thumbsdown{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-down"></i></a>
 				<b id="tdown_count">{{ post.thumbsdown }}</b> 
-				<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
+				<a id="thumbsup{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-up"></i></a>
 				<b id="tup_count">{{ post.thumbsup }}</b> 
+
 			</div>
 
 			<form id="myForm2" method="post" action="/shareit/add_comment/">
@@ -120,9 +101,35 @@
 				<input id="b2" value="Comment" name="submit" type="submit"/>
 			<br/><br/>
 		</form>
+
+		<script>
+		$(document).ready(function(){
+			$("#thumbsup{{post.id}}").click(function(){
+				var postid;
+				postid = $(this).attr("data-postid");
+				$.get('/shareit/post_tu', {postid: postid}, function(data){
+					$('#tup_count').html(data);
+					$('#thumbsup{{post.id}}').hide();
+					$('#thumbsdown{{post.id}}').hide();
+				});
+			});
+		});
+
+		$(document).ready(function() {
+			$('#thumbsdown{{post.id}}').click(function(){
+				var postid;
+				postid = $(this).attr("data-postid");
+				$.get('/shareit/post_tdown', {postid: postid}, function(data){
+					$('#tdown_count').html(data);
+					$('#thumbsdown{{post.id}}').hide();
+				});
+			});
+		});
+		</script>
 		</div>
 		{%endfor%}
 	{%endif%}
+
 
 
 <!-- If a post is more than 100 characters long then hide the text-->

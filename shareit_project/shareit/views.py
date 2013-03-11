@@ -120,8 +120,7 @@ def add_post(request):
 		text = request.POST['post']
 		cat = request.POST['catList']
 		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
-
-	newPost = Post(category=Category.objects.get(name=cat), userProfile=p, postcontents=text)
+	newPost = Post(category=Category.objects.get(name=cat), userProfile=p, postcontents=text, thumbsup=0, thumbsdown=0)
 	newPost.save()
 	
 	for link in urls:
@@ -207,9 +206,9 @@ def tup_post(request):
 	context = RequestContext(request)
 	post_id = None
 	if request.method == 'GET':
-		post_id = request.GET['post.id']
+		post_id = request.GET['postid']
 	else:
-		post_id = request.GET['post.id']
+		post_id = request.POST['postid']
 
 	thumbsup=0
 	if post_id:
@@ -225,9 +224,9 @@ def tdown_post(request):
 	context = RequestContext(request)
 	post_id = None
 	if request.method == 'GET':
-		post_id = request.GET['post.id']
+		post_id = request.GET['postid']
 	else:
-		post_id = request.GET['post.id']
+		post_id = request.POST['postid']
 
 	thumbsdown=0
 	if post_id:
