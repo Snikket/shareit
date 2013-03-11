@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from shareit.models import Category, Post, Followers, postComment
+from shareit.models import Category, Post, Followers, postComment, Link
 from shareit_project.settings import MEDIA_ROOT
 import urllib
 import BeautifulSoup
@@ -18,20 +18,14 @@ import re
 
 
 def home(request):
-	url = '<p>Hello World</p><a href="http://www.bbc.com">More Examples</a><a href="http://www.github.com">Even More Examples http://www.google.com he</a>'
-	urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', url)
-	linkTitles=[]
-	for link in urls:
-		soup = BeautifulSoup.BeautifulSoup(urllib.urlopen(link))
-		title= soup.title.string
-		linkTitles.append(title)
 	template = loader.get_template('shareit/home.html')
 	cat_list = Category.objects.all()
 	posts_list=Post.objects.all().order_by('-id')
 	comments_list=postComment.objects.all().order_by('-id')
+	links=Link.objects.all()
 	for cat in cat_list:
                 cat_name = cat.name
-	context = RequestContext(request, { 'urls':urls,'titles':linkTitles,'title':title,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
+	context = RequestContext(request, { 'links':links,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
 	return HttpResponse(template.render(context))
 
 def followUser(request, username):
@@ -125,8 +119,17 @@ def add_post(request):
 	if request.method == 'POST':
 		text = request.POST['post']
 		cat = request.POST['catList']
-		newPost = Post(category=Category.objects.get(name=cat), userProfile=p, postcontents=text)
-		newPost.save()
+		urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+
+	newPost = Post(category=Category.objects.get(name=cat), userProfile=p, postcontents=text)
+	newPost.save()
+	
+	for link in urls:
+		soup = BeautifulSoup.BeautifulSoup(urllib.urlopen(link))
+		title= soup.title.string
+		newLink=Link(title=title,url=link, linkPost=newPost)
+		newLink.save()
+		
 		# create a new post..
 		# save that post
 	#return home(request)
