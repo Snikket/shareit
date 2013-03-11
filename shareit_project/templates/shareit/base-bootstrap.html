@@ -106,12 +106,15 @@
 			<div class="btn-group" id="drop">
 			<select 
 
-				<select onchange="top.location.href = '/shareit/cat_filter/'+ this.options[ this.selectedIndex ].value" id="filterCat" name="catFilter"  >
-
-				
-				<option value="">{{default_filter}}</option>
+			<select onchange="top.location.href = '/shareit/'+ this.options[ this.selectedIndex ].value" id="filterCat" name="catFilter">
+				<option value=""> No Filter </option>		
 				{% for cat in cat_list %}
-				<option value={{cat.name}}>{{cat.name}}</option>
+					{% ifequal default_filter cat.name %}
+						<option value=cat_filter/{{cat.name}} selected="selected">{{cat.name}}</option>
+					{% else %}
+						<option value=cat_filter/{{cat.name}}>{{cat.name}}</option>
+					{% endifequal %}
+				
 				{% endfor %}
 				</select>
 	  		</div>	
