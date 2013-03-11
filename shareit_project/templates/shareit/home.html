@@ -1,5 +1,5 @@
 <HTML>
-
+  
   <HEADER><TITLE>Share.it</TITLE></HEADER>
   
   <head>
@@ -15,36 +15,33 @@
 	
 	
 	{% block content %}
-	{% for titl in titles %}
-	<a href="{{titl.id}}">{{titles.index(titl)}}</a>
-	{{titl}}
-	{% endfor %}
-	<label>{{titles}}</label>
+	
 	<!-- This is the code for the text box for users to share their posts -->
+	
 	{% if user.is_authenticated %}
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript">
-
-	
-	$("#thumbsup").click(function(){
-		var postid;
-		postid = $(this).attr("post.id");
-		$.get('/shareit/post_tu', {post.id: postid}, function(data){
-			$('#thumbsup_count').html(data);
-               		$('#thumbsup').hide();
-		});
-	});
-	
-	$(document).ready(function() {
-		$('#thumbsdown').click(function(){
-			var postid;
-			postid = $(this).attr("post.id");
-			$.get('/shareit/post_tdown', {post.id: postid}, function(data){
-				$('#thumbsdown_count').html(data);
-		       		$('#thumbsdown').hide();
-			});
-		});
-	});
+	  
+	  
+	  $("#thumbsup").click(function(){
+	  var postid;
+	  postid = $(this).attr("post.id");
+	  $.get('/shareit/post_tu', {post.id: postid}, function(data){
+	  $('#thumbsup_count').html(data);
+      $('#thumbsup').hide();
+	  });
+	  });
+	  
+	  $(document).ready(function() {
+	  $('#thumbsdown').click(function(){
+	  var postid;
+	  postid = $(this).attr("post.id");
+	  $.get('/shareit/post_tdown', {post.id: postid}, function(data){
+	  $('#thumbsdown_count').html(data);
+	  $('#thumbsdown').hide();
+	  });
+	  });
+	  });
 	  
 	  $(document).ready(function() {
 	  //$("#b1").click(function(){
@@ -91,34 +88,44 @@
 	  <a href="/shareit/profiles/{{post.userProfile}}"><img  src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
 		{% else %}
 		<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
-		{%endif%}
+	{%endif%}
 		<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
 		<div class="well"> {{post}}</div>
-		
-		<!-- Thumbs-up and Thumbs-down button -->
-		<div>
-		<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
-		<b id="tdown_count">{{ thumbsdown }}</b> people dont like this.
-		<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
-		<b id="tup_count">{{ thumbsup }}</b> people like this.
-		</div>
+		{% if links %}
 
-			<div class="btn-group" id="drop">
-					<select id="filterCat" name="catFilter">
-					<option value="">-- Comments --</option>
-					{% for comment in comments_list %}
-						{% if comment.cPost = post %}
-						<option value="commentid">{{comment.cPost}}{{post}}</option>
-						{%endif%}
-					{% endfor %}
-					</select>
-		  	</div>
-	</div>
-	{%endfor%}
+		<div class="well">Links in this post:<br/>
+		  {% for link in links %}
+	{% if link.linkPost == post %}
+	<li> <a href={{link.url}}>{{link}}</a></li>
 	{%endif%}
-	
-	{% endblock %} 
-	
-	
-  </BODY>
+{% endfor %}
+
+</div>
+{% endif %}
+<!-- Thumbs-up and Thumbs-down button -->
+<div>
+  <button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
+  <b id="tdown_count">{{ thumbsdown }}</b> people dont like this.
+  <button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
+  <b id="tup_count">{{ thumbsup }}</b> people like this.
+</div>
+
+<div class="btn-group" id="drop">
+  <select id="filterCat" name="catFilter">
+	<option value="">-- Comments --</option>
+	{% for comment in comments_list %}
+	{% if comment.cPost = post %}
+	<option value="commentid">{{comment.cPost}}{{post}}</option>
+	{%endif%}
+	{% endfor %}
+  </select>
+</div>
+</div>
+{%endfor%}
+{%endif%}
+
+{% endblock %} 
+
+
+</BODY>
 </HTML>

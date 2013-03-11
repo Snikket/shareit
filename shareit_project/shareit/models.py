@@ -35,6 +35,8 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+
+
 class Post(models.Model):
     category= models.ForeignKey(Category)
     userProfile = models.ForeignKey(UserProfile)
@@ -44,6 +46,13 @@ class Post(models.Model):
 
     def __unicode__(self):
         return self.postcontents
+
+class Link(models.Model):
+	title = models.CharField(max_length=50, unique=False)
+	url = models.CharField(max_length=300, unique=False)
+	linkPost=models.ForeignKey(Post)
+	def __unicode__(self):
+		return self.title
 
 class postComment(models.Model):
 	text = models.CharField(max_length=1000, unique=False)
