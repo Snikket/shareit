@@ -21,14 +21,109 @@
 	<br/>
 	<h4> {{user1.username}}'s Posts </h4>
 	{% if posts_list %}
-	{% for post in posts_list %}
-	<br/>
-	<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI>
-	{{post}}
-	{%endfor%}
+		{% for post in posts_list %}
+			<br/>
+			<!--<LI><a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} says:</a></LI> -->
+				<div class="well">
+
+				<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
+				<div id="userPost" name="userPost" class="well"> <p class="minimize">{{post}}</p></div>
+				{% if links %}
+				<div class="well">Links in this post:<br/>
+					{% for link in links %}
+						{% if link.linkPost == post %}
+							<li> <a href={{link.url}}>{{link}}</a></li>
+						{%endif%}
+					{% endfor %}
+				</div>
+				{% endif %}
+
+
+				<!-- Thumbs-up and Thumbs-down button -->
+				<div align="right">
+					<a id="thumbsdown{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-down"></i></a>
+					<b id="tdown_count">{{ post.thumbsdown }}</b> 
+					<a id="thumbsup{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-up"></i></a>
+					<b id="tup_count">{{ post.thumbsup }}</b> 
+				</div>
+
+				<form id="myForm2" method="post" action="/shareit/add_comment/">
+				{% csrf_token %}
+					<div class="btn-group" id="drop">
+					<select id="comments" name="comments">
+					<option value="">-- Comments --</option>
+					{% for comment in comments_list %}
+						{% if comment.cPost = post %}
+							<option value="commentid">{{comment}}</option>
+						{%endif%}
+					{% endfor %}
+					</select>
+					</div>
+					<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
+					<input id="b2" value="Comment" name="submit" type="submit"/>
+				<br/><br/>
+			</form>
+
+			<script>
+			$(document).ready(function(){
+				$("#thumbsup{{post.id}}").click(function(){
+					var postid;
+					postid = $(this).attr("data-postid");
+					$.get('/shareit/post_tu', {postid: postid}, function(data){
+						$('#tup_count').html(data);
+						$('#thumbsup{{post.id}}').attr("disabled", true);
+						$('#thumbsdown{{post.id}}').attr("disabled", true);
+					});
+				});
+			});
+
+			$(document).ready(function() {
+				$('#thumbsdown{{post.id}}').click(function(){
+					var postid;
+					postid = $(this).attr("data-postid");
+					$.get('/shareit/post_tdown', {postid: postid}, function(data){
+						$('#tdown_count').html(data);					
+						$('#thumbsdown{{post.id}}').attr("disabled", true);
+						$('#thumbsup{{post.id}}').attr("disabled", true);
+					});
+				});
+			});
+			</script>
+			</div>
+		{%endfor%}
 	{% else %}
-	<p> {{user1.username}} has not posted anything yet :( Try again later .. </p>
+		<p> {{user1.username}} has not posted anything yet :( Try again later .. </p>
 	{% endif %}
+
+	<script>
+	jQuery(function(){
+
+    var minimized_elements = $('p.minimize');
+    
+    minimized_elements.each(function(){    
+        var t = $(this).text();        
+        if(t.length < 100) return;
+        
+        $(this).html(
+            t.slice(0,100)+'<span>... </span><a href="#" class="more">Read More</a>'+
+            '<span style="display:none;">'+ t.slice(100,t.length)+' <a href="#" class="less">Less</a></span>'
+        );
+        
+    }); 
+    
+    $('a.more', minimized_elements).click(function(event){
+        event.preventDefault();
+        $(this).hide().prev().hide();
+        $(this).next().show();        
+    });
+    
+    $('a.less', minimized_elements).click(function(event){
+        event.preventDefault();
+        $(this).parent().hide().prev().show().prev().show();    
+    });
+
+});
+</script>
 
 
 {% endblock %}

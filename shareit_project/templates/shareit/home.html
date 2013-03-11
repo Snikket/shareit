@@ -109,8 +109,10 @@
 				postid = $(this).attr("data-postid");
 				$.get('/shareit/post_tu', {postid: postid}, function(data){
 					$('#tup_count').html(data);
-					$('#thumbsup{{post.id}}').hide();
-					$('#thumbsdown{{post.id}}').hide();
+					//$('#thumbsup{{post.id}}').hide();
+					//$('#thumbsdown{{post.id}}').hide();
+					$('#thumbsup{{post.id}}').attr("disabled", true);
+					$('#thumbsdown{{post.id}}').attr("disabled", true);
 				});
 			});
 		});
@@ -120,8 +122,9 @@
 				var postid;
 				postid = $(this).attr("data-postid");
 				$.get('/shareit/post_tdown', {postid: postid}, function(data){
-					$('#tdown_count').html(data);
-					$('#thumbsdown{{post.id}}').hide();
+					$('#tdown_count').html(data);					
+					$('#thumbsdown{{post.id}}').attr("disabled", true);
+					$('#thumbsup{{post.id}}').attr("disabled", true);
 				});
 			});
 		});
