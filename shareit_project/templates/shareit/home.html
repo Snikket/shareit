@@ -13,11 +13,7 @@
   <BODY>
 	
 	{% block content %}
-	{% for titl in titles %}
-	<a href="{{titl.id}}">{{titles.index(titl)}}</a>
-	{{titl}}
-	{% endfor %}
-	<label>{{titles}}</label>
+
 	<!-- This is the code for the text box for users to share their posts -->
 	{% if user.is_authenticated %}
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
