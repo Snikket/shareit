@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from shareit.models import Category, Post, Followers, postComment, Link
+from shareit_project.settings import MEDIA_ROOT
 import urllib
 import BeautifulSoup
 
@@ -72,6 +73,8 @@ def register(request):
 			profile = pform.save(commit = False)
 			profile.user = user
 			profile.save()
+			#profile picture upload
+			#save_file(request.FILES['picture'])
 			registered = True
 		else:
 			print uform.errors, pform.errors
@@ -79,6 +82,14 @@ def register(request):
 		uform = UserForm()
 		pform = UserProfileForm()
 	return render_to_response('shareit/register.html', {'uform':uform, 'pform':pform, 'registered':registered}, context)
+
+# save the picture, but it doesn't work - it crashes.
+#def save_file(file, path=''):
+#	filename = file._get_name()
+#       fd = open('%s/%s' % (MEDIA_ROOT, str(path) + str(filename)), 'wb' )
+#       for chunk in file.chunks():
+#               fd.write(chunk)
+#       fd.close()
 
 def user_login(request):
     context = RequestContext(request)
@@ -123,6 +134,19 @@ def add_post(request):
 		# save that post
 	#return home(request)
 	return HttpResponseRedirect('/shareit/')
+
+def add_comment(request):
+	o=User.objects.get(username=request.user.username)
+	username = request.user.username
+	p=UserProfile.objects.get(user=o)
+	if request.method == 'POST':
+		comments = request.POST['commentBox']
+		post = Post.objects.get(postcontents=request.POST['userPost'])
+		newComment = Comment(text=comments, cuser=p, cpost=post)
+		newComment.save()
+	context_dict = {'userpost': userpost}
+	return HttpResponseRedirect('/shareit/')		
+	
 	
 @login_required
 def followers(request):

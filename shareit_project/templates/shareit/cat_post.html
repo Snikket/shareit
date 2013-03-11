@@ -9,10 +9,9 @@
 {% extends 'shareit/base-bootstrap.html' %}
 <BODY>
 {% block content %}
-<form id="myForm" method="post" action="/shareit/category/">
-	 {% csrf_token %}
-	  	<input id="b1" value="<--Back To Categories" name="submit" type="submit"/>	
-	</form>
+
+<p align="right"><a href="#" class="btn btn-info btn-small"><i class="icon-white icon-plus"></i> Add to My Categories</a></p>
+<p align="right"><a href="#" class="btn btn-info btn-small"><i class="icon-white icon-minus"></i> Remove from My Categories</a></p>
 
 <H2> {{cat_name}}</H2>
 {% if posts_list %}

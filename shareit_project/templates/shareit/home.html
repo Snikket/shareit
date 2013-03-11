@@ -1,125 +1,120 @@
 <HTML>
-  
-  <HEADER><TITLE>Share.it</TITLE></HEADER>
-  
-  <head>
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  </head>
-  
-  <BODY>
-	
-	{% extends 'shareit/base-bootstrap.html' %}
-	
-	
-	
-	{% block content %}
-	
-	<!-- This is the code for the text box for users to share their posts -->
-	
-	{% if user.is_authenticated %}
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script type="text/javascript">
-	  
-	  
-	  $("#thumbsup").click(function(){
-	  var postid;
-	  postid = $(this).attr("post.id");
-	  $.get('/shareit/post_tu', {post.id: postid}, function(data){
-	  $('#thumbsup_count').html(data);
-      $('#thumbsup').hide();
-	  });
-	  });
-	  
-	  $(document).ready(function() {
-	  $('#thumbsdown').click(function(){
-	  var postid;
-	  postid = $(this).attr("post.id");
-	  $.get('/shareit/post_tdown', {post.id: postid}, function(data){
-	  $('#thumbsdown_count').html(data);
-	  $('#thumbsdown').hide();
-	  });
-	  });
-	  });
-	  
-	  $(document).ready(function() {
-	  //$("#b1").click(function(){
-	  //var value = $("#t1").val();
-	  //$("#post").html(value);
-	  //});
-	  $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
-	  });
-	  
-	  function changeFocus(id){
-	  var v = "#" + id;
-	  $(v).focus();
-	  }
-	</script>
-	
-	<form id="myForm" method="post" action="/shareit/add_post/">
-	  {% csrf_token %}
-      <textarea id="t1" name="post" type="text" value="This is a TextBox"></textarea>
-      <br/><br/>
-	  <div class="btn-group" id="drop">
-		<select id="catList" name="catList">
-		  <option value="">-- Category --</option>
-		  {% for cat in cat_list %}
-		  <option value="{{cat.name}}">{{cat.name}}</option>
-		  {% endfor %}
-		</select>
-	  </div>		
-	  <input id="b1" value="Share it !" name="submit" type="submit"/>	
-	</form>
-	{% else %}
-	<div class="alert alert-block">
-  	  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  	  <h4>You are not logged in!</h4>
-  	  You need to be logged if you want to post in a Category or interact with other users...
-	</div>
-	{% endif %}
-	
-	
-	<h4> POSTS </h4>
-	{% if posts_list %}
-	{% for post in posts_list %}
-	<div class="well">
-	  {% if post.userProfile.picture %}
-	  <a href="/shareit/profiles/{{post.userProfile}}"><img  src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
-		{% else %}
-		<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
-	{%endif%}
-		<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
-		<div class="well"> {{post}}</div>
-		{% if links %}
+{% extends 'shareit/base-bootstrap.html' %}
+<HEADER><TITLE>Share.it</TITLE></HEADER>
 
-		<div class="well">Links in this post:<br/>
-		  {% for link in links %}
-	{% if link.linkPost == post %}
-	<li> <a href={{link.url}}>{{link}}</a></li>
-	{%endif%}
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+<BODY>
+
+{% block content %}
+<!-- This is the code for the text box for users to share their posts -->
+{% if user.is_authenticated %}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+$("#thumbsup").click(function(){
+var postid;
+postid = $(this).attr("post.id");
+$.get('/shareit/post_tu', {post.id: postid}, function(data){
+$('#thumbsup_count').html(data);
+$('#thumbsup').hide();
+});
+});
+
+$(document).ready(function() {
+$('#thumbsdown').click(function(){
+var postid;
+postid = $(this).attr("post.id");
+$.get('/shareit/post_tdown', {post.id: postid}, function(data){
+$('#thumbsdown_count').html(data);
+$('#thumbsdown').hide();
+});
+});
+});
+
+$(document).ready(function() {
+//$("#b1").click(function(){
+//var value = $("#t1").val();
+//$("#post").html(value);
+//});
+$("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
+});
+
+function changeFocus(id){
+var v = "#" + id;
+$(v).focus();
+}
+</script>
+
+<form id="myForm" method="post" action="/shareit/add_post/">
+{% csrf_token %}
+<textarea id="t1" name="post" type="text" value="This is a TextBox" class="input-block-level" rows="5"></textarea>
+<br/><br/>
+<div class="btn-group" id="drop">
+<select id="catList" name="catList">
+<option value="">-- Category --</option>
+{% for cat in cat_list %}
+<option value="{{cat.name}}">{{cat.name}}</option>
 {% endfor %}
-
+</select>
+</div>	
+<input id="b1" value="Share it !" name="submit" type="submit"/>	
+</form>
+{% else %}
+<div class="alert alert-block">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+<h4>You are not logged in!</h4>
+You need to be logged if you want to post in a Category or interact with other users...
 </div>
 {% endif %}
-<!-- Thumbs-up and Thumbs-down button -->
-<div>
-  <button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
-  <b id="tdown_count">{{ thumbsdown }}</b> people dont like this.
-  <button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
-  <b id="tup_count">{{ thumbsup }}</b> people like this.
-</div>
 
-<div class="btn-group" id="drop">
-  <select id="filterCat" name="catFilter">
-	<option value="">-- Comments --</option>
-	{% for comment in comments_list %}
-	{% if comment.cPost = post %}
-	<option value="commentid">{{comment.cPost}}{{post}}</option>
-	{%endif%}
-	{% endfor %}
-  </select>
+<h4> POSTS </h4>
+{% if posts_list %}
+{% for post in posts_list %}
+<div class="well">
+{% if post.userProfile.picture %}
+<a href="/shareit/profiles/{{post.userProfile}}"><img src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
+{% else %}
+<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
+{%endif%}
+<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
+<div id="userPost" name="userPost" class="well"> {{post}}</div>
+{% if links %}
+				<div class="well">Links in this post:<br/>
+		  		{% for link in links %}
+		  			{% if link.linkPost == post %}
+		  				<li> <a href={{link.url}}>{{link}}</a></li>
+		  			{%endif%}
+		  		{% endfor %}
+				</div>
+			{% endif %}
+<!-- Thumbs-up and Thumbs-down button -->
+<div align="right">
+<button id="thumbsdown" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-down"></i></button>
+<b id="tdown_count">{{ thumbsdown }}</b> 
+<button id="thumbsup" data-postid="{{post_id}}" class="btn"><i class="icon-thumbs-up"></i></button>
+<b id="tup_count">{{ thumbsup }}</b> 
 </div>
+<form id="myForm2" method="post" action="/shareit/add_comment/">
+{% csrf_token %}
+<div class="btn-group" id="drop">
+<select id="comments" name="comments">
+<option value="">-- Comments --</option>
+{% for comment in comments_list %}
+{% if comment.cPost = post %}
+<option value="commentid">{{comment}}</option>
+{%endif%}
+{% endfor %}
+</select>
+</div>
+<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
+<input id="b2" value="Comment" name="submit" type="submit"/>
+<br/><br/>
+</form>
 </div>
 {%endfor%}
 {%endif%}
