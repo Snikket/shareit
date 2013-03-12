@@ -87,10 +87,10 @@
 
 			<form id="myForm2" method="post" action="/shareit/add_comment/{{post.id}}">
 			{% csrf_token %}
-				<p class="commentminimize">
+				<p class="commentminimize"> 
 				{% for comment in comments_list %}
 					{% if comment.cPost = post %}
-						<label>{{comment.cUser}} said: {{comment}} </label>
+						{{comment.cUser}} said: {{comment}}
 					{%endif%}
 				{% endfor %}
 				</p>
@@ -162,12 +162,12 @@ jQuery(function(){
     });
 
 	 minimized_comments.each(function(){    
-        var t = $(this).text();        
+        var t = $(this).text();       
         if(t.length < 0) return;
         
         $(this).html(
             t.slice(0,0)+'<span> </span><a href="#" class="more">See Comments</a>'+
-            '<span style="display:none;">'+ t.slice(1,t.length)+' <a href="#" class="less">Hide Comments</a></span>'
+            '<span style="display:none;">'+ t.slice(1,t.length)+ '<a href="#" class="less">Hide Comments</a></span>'
         );
         
     }); 
@@ -175,7 +175,8 @@ jQuery(function(){
     $('a.more', minimized_comments).click(function(event){
         event.preventDefault();
         $(this).hide().prev().hide();
-        $(this).next().show();        
+        $(this).next().show();
+	        
     });
     
     $('a.less', minimized_comments).click(function(event){

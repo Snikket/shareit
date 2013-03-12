@@ -19,4 +19,6 @@ urlpatterns = patterns('',
 	url(r'^post_tu', views.tup_post, name='post_tu'),
 	url(r'^post_tdown', views.tdown_post, name='post_tdown'),
 	url(r'^add_comment/(?P<post_id>\w+)', views.add_comment, name='add_comment'),
+	url(r'^mostPop', views.mostPop, name='MostPop'),
+	url(r'^leastPop', views.leastPop, name='leastPop'),
 )

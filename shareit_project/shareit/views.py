@@ -28,6 +28,28 @@ def home(request):
 	context = RequestContext(request, { 'links':links,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
 	return HttpResponse(template.render(context))
 
+def mostPop(request):
+	template = loader.get_template('shareit/home.html')
+	cat_list = Category.objects.all()
+	posts_list=Post.objects.all().order_by('-thumbsup')
+	comments_list=postComment.objects.all().order_by('-id')
+	links=Link.objects.all()
+	for cat in cat_list:
+                cat_name = cat.name
+	context = RequestContext(request, { 'links':links,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
+	return HttpResponse(template.render(context))
+
+def leastPop(request):
+	template = loader.get_template('shareit/home.html')
+	cat_list = Category.objects.all()
+	posts_list=Post.objects.all().order_by('-thumbsdown')
+	comments_list=postComment.objects.all().order_by('-id')
+	links=Link.objects.all()
+	for cat in cat_list:
+                cat_name = cat.name
+	context = RequestContext(request, { 'links':links,'posts_list':posts_list,'cat_list': cat_list,'comments_list':comments_list, 'default_filter': '-- No Filter --'})
+	return HttpResponse(template.render(context))
+
 def followUser(request, username):
 	userToFollow=User.objects.get(username=username)
 	newFollower = Followers(fuser=request.user, follows=userToFollow)
@@ -135,6 +157,7 @@ def add_post(request):
 	return HttpResponseRedirect('/shareit/')
 
 def add_comment(request, post_id):
+	#We couldn't get this working without passing the post.id as a parameter.
 	o=User.objects.get(username=request.user.username)
 	username = request.user.username
 	p=UserProfile.objects.get(user=o)
