@@ -64,7 +64,7 @@
 			{%endif%}
 
 			<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
-			<div id="userPost" name="userPost" class="well"> <p class="minimize">{{post}}</p></div>
+			<div id="userPost" name="userPost" class="well"> <p id="minimize" class="minimize">{{post}}</p></div>
 			{% if links %}
 			<div class="well">Links in this post:<br/>
 				{% for link in links %}
@@ -85,18 +85,15 @@
 
 			</div>
 
-			<form id="myForm2" method="post" action="/shareit/add_comment/">
+			<form id="myForm2" method="post" action="/shareit/add_comment/{{post.id}}">
 			{% csrf_token %}
-				<div class="btn-group" id="drop">
-				<select id="comments" name="comments">
-				<option value="">-- Comments --</option>
+				<p class="commentminimize">
 				{% for comment in comments_list %}
 					{% if comment.cPost = post %}
-						<option value="commentid">{{comment}}</option>
+						<label>{{comment.cUser}} said: {{comment}} </label>
 					{%endif%}
 				{% endfor %}
-				</select>
-				</div>
+				</p>
 				<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
 				<input id="b2" value="Comment" name="submit" type="submit"/>
 			<br/><br/>
@@ -112,7 +109,7 @@
 					//$('#thumbsup{{post.id}}').hide();
 					//$('#thumbsdown{{post.id}}').hide();
 					$('#thumbsup{{post.id}}').attr("disabled", true);
-					$('#thumbsdown{{post.id}}').enabled=false;
+					$('#thumbsdown{{post.id}}').attr("disabled",true);
 				});
 			});
 		});
@@ -140,7 +137,8 @@
 jQuery(function(){
 
     var minimized_elements = $('p.minimize');
-    
+    var minimized_comments = $('p.commentminimize');
+
     minimized_elements.each(function(){    
         var t = $(this).text();        
         if(t.length < 100) return;
@@ -163,10 +161,35 @@ jQuery(function(){
         $(this).parent().hide().prev().show().prev().show();    
     });
 
+	 minimized_comments.each(function(){    
+        var t = $(this).text();        
+        if(t.length < 0) return;
+        
+        $(this).html(
+            t.slice(0,0)+'<span> </span><a href="#" class="more">See Comments</a>'+
+            '<span style="display:none;">'+ t.slice(1,t.length)+' <a href="#" class="less">Hide Comments</a></span>'
+        );
+        
+    }); 
+    
+    $('a.more', minimized_comments).click(function(event){
+        event.preventDefault();
+        $(this).hide().prev().hide();
+        $(this).next().show();        
+    });
+    
+    $('a.less', minimized_comments).click(function(event){
+        event.preventDefault();
+        $(this).parent().hide().prev().show().prev().show();    
+    });
+
+
 });
 </script>
 
 {% endblock %}
+
+
 
 </BODY>
 </HTML>

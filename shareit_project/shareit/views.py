@@ -134,18 +134,26 @@ def add_post(request):
 	#return home(request)
 	return HttpResponseRedirect('/shareit/')
 
-def add_comment(request):
+def add_comment(request, post_id):
 	o=User.objects.get(username=request.user.username)
 	username = request.user.username
 	p=UserProfile.objects.get(user=o)
 	if request.method == 'POST':
 		comments = request.POST['commentBox']
-		post = Post.objects.get(postcontents=request.POST['userPost'])
-		newComment = Comment(text=comments, cuser=p, cpost=post)
+		post = Post.objects.get(id=post_id)
+		newComment = postComment(text=comments, cUser=p, cPost=post)
 		newComment.save()
-	context_dict = {'userpost': userpost}
+	context_dict = {}
 	return HttpResponseRedirect('/shareit/')		
 	
+
+
+
+
+
+
+
+
 	
 @login_required
 def followers(request):

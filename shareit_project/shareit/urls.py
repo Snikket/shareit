@@ -18,5 +18,5 @@ urlpatterns = patterns('',
 	url(r'^add_post/$', views.add_post, name='add_post'),
 	url(r'^post_tu', views.tup_post, name='post_tu'),
 	url(r'^post_tdown', views.tdown_post, name='post_tdown'),
-	url(r'^add_comment/$', views.add_comment, name='add_comment'),
+	url(r'^add_comment/(?P<post_id>\w+)', views.add_comment, name='add_comment'),
 )
