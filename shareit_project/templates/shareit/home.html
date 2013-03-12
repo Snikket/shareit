@@ -90,7 +90,9 @@
 				<p class="commentminimize"> 
 				{% for comment in comments_list %}
 					{% if comment.cPost = post %}
-						{{comment.cUser}} said: {{comment}}
+<p class="comment2">
+						{{comment.cUser}} said: {{comment}}<br /><br />
+</p>
 					{%endif%}
 				{% endfor %}
 				</p>
@@ -171,17 +173,20 @@ jQuery(function(){
         );
         
     }); 
-    
+
     $('a.more', minimized_comments).click(function(event){
         event.preventDefault();
         $(this).hide().prev().hide();
         $(this).next().show();
+	$('p.comment2').show();
+
 	        
     });
     
     $('a.less', minimized_comments).click(function(event){
         event.preventDefault();
-        $(this).parent().hide().prev().show().prev().show();    
+        $(this).parent().hide().prev().show().prev().show();   
+	$('p.comment2').hide(); 
     });
 
 

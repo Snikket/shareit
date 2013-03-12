@@ -56,23 +56,21 @@
 					<b id="tup_count">{{ post.thumbsup }}</b> 
 				</div>
 
-				<form id="myForm2" method="post" action="/shareit/add_comment/">
-				{% csrf_token %}
-					<div class="btn-group" id="drop">
-					<select id="comments" name="comments">
-					<option value="">-- Comments --</option>
-					{% for comment in comments_list %}
-						{% if comment.cPost = post %}
-							<option value="commentid">{{comment}}</option>
-						{%endif%}
-					{% endfor %}
-					</select>
-					</div>
-					<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
-					<input id="b2" value="Comment" name="submit" type="submit"/>
-				<br/><br/>
-			</form>
-
+				<form id="myForm2" method="post" action="/shareit/add_comment/{{post.id}}">
+			{% csrf_token %}
+				<p class="commentminimize"> 
+				{% for comment in comments_list %}
+					{% if comment.cPost = post %}
+<p class="comment2">
+						{{comment.cUser}} said: {{comment}}<br /><br />
+</p>
+					{%endif%}
+				{% endfor %}
+				</p>
+				<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
+				<input id="b2" value="Comment" name="submit" type="submit"/>
+			<br/><br/>
+		</form>
 			<script>
 			$(document).ready(function(){
 				$("#thumbsup{{post.id}}").click(function(){
@@ -105,10 +103,11 @@
 	{% endif %}
 
 	<script>
-	jQuery(function(){
+jQuery(function(){
 
     var minimized_elements = $('p.minimize');
-    
+    var minimized_comments = $('p.commentminimize');
+
     minimized_elements.each(function(){    
         var t = $(this).text();        
         if(t.length < 100) return;
@@ -130,6 +129,33 @@
         event.preventDefault();
         $(this).parent().hide().prev().show().prev().show();    
     });
+
+	 minimized_comments.each(function(){    
+        var t = $(this).text();       
+        if(t.length < 0) return;
+        
+        $(this).html(
+            t.slice(0,0)+'<span> </span><a href="#" class="more">See Comments</a>'+
+            '<span style="display:none;">'+ t.slice(1,t.length)+ '<a href="#" class="less">Hide Comments</a></span>'
+        );
+        
+    }); 
+
+    $('a.more', minimized_comments).click(function(event){
+        event.preventDefault();
+        $(this).hide().prev().hide();
+        $(this).next().show();
+	$('p.comment2').show();
+
+	        
+    });
+    
+    $('a.less', minimized_comments).click(function(event){
+        event.preventDefault();
+        $(this).parent().hide().prev().show().prev().show();   
+	$('p.comment2').hide(); 
+    });
+
 
 });
 </script>
