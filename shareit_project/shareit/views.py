@@ -169,15 +169,6 @@ def add_comment(request, post_id):
 	context_dict = {}
 	return HttpResponseRedirect('/shareit/')		
 	
-
-
-
-
-
-
-
-
-	
 @login_required
 def followers(request):
 	template = loader.get_template('shareit/followers.html')
