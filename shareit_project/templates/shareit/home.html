@@ -1,201 +1,201 @@
 <HTML>
-{% extends 'shareit/base-bootstrap.html' %}
-<HEADER><TITLE>Share.it</TITLE></HEADER>
-
-
+  {% extends 'shareit/base-bootstrap.html' %}
+  <HEADER><TITLE>Share.it</TITLE></HEADER>
+  
+  
   <head>
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   </head>
   
   <BODY>
-	
-{% block content %}
-	<!-- This is the code for the text box for users to share their posts -->
-	{% if user.is_authenticated %}
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script type="text/javascript">
-
-	$(document).ready(function() {
-	//$("#b1").click(function(){
-	//var value = $("#t1").val();
-	//$("#post").html(value);
-	//});
-	$("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
-	});
-
-	function changeFocus(id){
-	var v = "#" + id;
-	$(v).focus();
-	}
-	</script>
-
-	<form id="myForm" method="post" action="/shareit/add_post/">
-	{% csrf_token %}
-		<textarea id="t1" name="post" type="text" value="This is a TextBox" class="input-block-level" rows="5"></textarea>
-		<br/><br/>
-		<div class="btn-group" id="drop">
-			<select id="catList" name="catList">
-			<option value="">-- Category --</option>
-			{% for cat in cat_list %}
-				<option value="{{cat.name}}">{{cat.name}}</option>
-			{% endfor %}
-		</select>
-		</div>	
-		<input id="b1" value="Share it !" name="submit" type="submit"/>	
-	</form>
+    
+    {% block content %}
+    <!-- This is the code for the text box for users to share their posts -->
+    {% if user.is_authenticated %}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+      
+      $(document).ready(function() {
+      //$("#b1").click(function(){
+      //var value = $("#t1").val();
+      //$("#post").html(value);
+      //});
+      $("#t1").animate({"height": "150px", "width": "500px"}, "fast" );
+      });
+      
+      function changeFocus(id){
+      var v = "#" + id;
+      $(v).focus();
+      }
+    </script>
+    
+    <form id="myForm" method="post" action="/shareit/add_post/">
+      {% csrf_token %}
+      <textarea id="t1" name="post" type="text" value="This is a TextBox" class="input-block-level" rows="5"></textarea>
+      <br/><br/>
+      <div class="btn-group" id="drop">
+	<select id="catList" name="catList">
+	  <option value="">-- Category --</option>
+	  {% for cat in cat_list %}
+	  <option value="{{cat.name}}">{{cat.name}}</option>
+	  {% endfor %}
+	</select>
+      </div>	
+      <input id="b1" value="Share it !" name="submit" type="submit"/>	
+    </form>
+    {% else %}
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>You are not logged in!</h4>
+      You need to be logged if you want to post in a Category or interact with other users...
+    </div>
+    {% endif %}
+    
+    <h4> POSTS </h4>
+    {% if posts_list %}
+    {% for post in posts_list %}
+    <div class="well">
+      {% if post.userProfile.picture %}
+      <a href="/shareit/profiles/{{post.userProfile}}"><img src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
 	{% else %}
-		<div class="alert alert-block">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<h4>You are not logged in!</h4>
-		You need to be logged if you want to post in a Category or interact with other users...
-		</div>
-	{% endif %}
-
-	<h4> POSTS </h4>
-	{% if posts_list %}
-		{% for post in posts_list %}
-			<div class="well">
-			{% if post.userProfile.picture %}
-				<a href="/shareit/profiles/{{post.userProfile}}"><img src="{{STATIC_URL}}{{ post.userProfile.picture }}" width="30" height="40" /> <a/>
-			{% else %}
-				<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
-			{%endif%}
-
-			<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
-			<div id="userPost" name="userPost" class="well"> <p id="minimize" class="minimize">{{post}}</p>
-			{% if links %}
-
-				{% for link in links %}
-					{% if link.linkPost == post %}
-						<li> <a href={{link.url}}>{{link}}</a></li>
-					{%endif%}
-				{% endfor %}
-			</div>
-			{% endif %}
-
-
-			<!-- Thumbs-up and Thumbs-down button -->
-			<div align="right">
-				<a id="thumbsdown{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-down"></i></a>
-				<b id="tdown_count">{{ post.thumbsdown }}</b> 
-				<a id="thumbsup{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-up"></i></a>
-				<b id="tup_count">{{ post.thumbsup }}</b> 
-
-			</div>
-
-			<form id="myForm2" method="post" action="/shareit/add_comment/{{post.id}}">
-			{% csrf_token %}
-				<p class="commentminimize"> 
-				{% for comment in comments_list %}
-					{% if comment.cPost = post %}
-<p class="comment2">
-						{{comment.cUser}} said: {{comment}}<br /><br />
-</p>
-					{%endif%}
-				{% endfor %}
-				</p>
-				<textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
-				<input id="b2" value="Comment" name="submit" type="submit"/>
-			<br/><br/>
-		</form>
-
-		<script>
-		$(document).ready(function(){
-			$("#thumbsup{{post.id}}").click(function(){
-				var postid;
-				postid = $(this).attr("data-postid");
-				$.get('/shareit/post_tu', {postid: postid}, function(data){
-					$('#tup_count').html(data);
-					//$('#thumbsup{{post.id}}').hide();
-					//$('#thumbsdown{{post.id}}').hide();
-					$('#thumbsup{{post.id}}').attr("disabled", true);
-					$('#thumbsdown{{post.id}}').attr("disabled",true);
-				});
-			});
-		});
-
-		$(document).ready(function() {
-			$('#thumbsdown{{post.id}}').click(function(){
-				var postid;
-				postid = $(this).attr("data-postid");
-				$.get('/shareit/post_tdown', {postid: postid}, function(data){
-					$('#tdown_count').html(data);					
-					$('#thumbsdown{{post.id}}').attr("disabled", true);
-					$('#thumbsup{{post.id}}').attr("disabled", true);
-				});
-			});
-		});
-		</script>
-		</div>
-		{%endfor%}
+	<img src="{{STATIC_URL}}imgs/nophoto.jpg" width="30" height="40"/>
 	{%endif%}
-
-
-
-<!-- If a post is more than 100 characters long then hide the text-->
-<script>
-jQuery(function(){
-
-    var minimized_elements = $('p.minimize');
-    var minimized_comments = $('p.commentminimize');
-
-    minimized_elements.each(function(){    
-        var t = $(this).text();        
-        if(t.length < 100) return;
-        
-        $(this).html(
-            t.slice(0,100)+'<span>... </span><a href="#" class="more">Read More</a>'+
-            '<span style="display:none;">'+ t.slice(100,t.length)+' <a href="#" class="less">Less</a></span>'
-        );
-        
-    }); 
+	
+	<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
+	<div id="userPost" name="userPost" class="well"> <p id="minimize" class="minimize">{{post}}</p>
+	  {% if links %}
+	  
+	  {% for link in links %}
+	  {% if link.linkPost == post %}
+	  <li> <a href={{link.url}}>{{link}}</a></li>
+	  {%endif%}
+	  {% endfor %}
+	</div>
+	{% endif %}
+	
+	
+	<!-- Thumbs-up and Thumbs-down button -->
+	<div align="right">
+	  <a id="thumbsdown{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-down"></i></a>
+	  <b id="tdown_count">{{ post.thumbsdown }}</b> 
+	  <a id="thumbsup{{post.id}}" data-postid="{{post.id}}" class="btn btn-primary"><i class="icon-white icon-thumbs-up"></i></a>
+	  <b id="tup_count">{{ post.thumbsup }}</b> 
+	  
+	</div>
+	
+	<form id="myForm2" method="post" action="/shareit/add_comment/{{post.id}}">
+	  {% csrf_token %}
+	  <p class="commentminimize"> 
+	    {% for comment in comments_list %}
+	    {% if comment.cPost = post %}
+	  <p class="comment2">
+	    {{comment.cUser}} said: {{comment}}<br /><br />
+	  </p>
+	  {%endif%}
+	  {% endfor %}
+	  </p>
+	  <textarea id="t2" name="commentBox" type="text" value="Comments" class="input-block-level"></textarea><br/>
+	  <input id="b2" value="Comment" name="submit" type="submit"/>
+	  <br/><br/>
+	</form>
+	
+	<script>
+	  $(document).ready(function(){
+	  $("#thumbsup{{post.id}}").click(function(){
+	  var postid;
+	  postid = $(this).attr("data-postid");
+	  $.get('/shareit/post_tu', {postid: postid}, function(data){
+	  $('#tup_count').html(data);
+	  //$('#thumbsup{{post.id}}').hide();
+	  //$('#thumbsdown{{post.id}}').hide();
+	  $('#thumbsup{{post.id}}').attr("disabled", true);
+	  $('#thumbsdown{{post.id}}').attr("disabled",true);
+	  });
+	  });
+	  });
+	  
+	  $(document).ready(function() {
+	  $('#thumbsdown{{post.id}}').click(function(){
+	  var postid;
+	  postid = $(this).attr("data-postid");
+	  $.get('/shareit/post_tdown', {postid: postid}, function(data){
+	  $('#tdown_count').html(data);					
+	  $('#thumbsdown{{post.id}}').attr("disabled", true);
+	  $('#thumbsup{{post.id}}').attr("disabled", true);
+	  });
+	  });
+	  });
+	</script>
+    </div>
+    {%endfor%}
+    {%endif%}
     
-    $('a.more', minimized_elements).click(function(event){
-        event.preventDefault();
-        $(this).hide().prev().hide();
-        $(this).next().show();        
-    });
     
-    $('a.less', minimized_elements).click(function(event){
-        event.preventDefault();
-        $(this).parent().hide().prev().show().prev().show();    
-    });
-
-	 minimized_comments.each(function(){    
-        var t = $(this).text();       
-        if(t.length < 0) return;
-        
-        $(this).html(
-            t.slice(0,0)+'<span> </span><a href="#" class="more">See Comments</a>'+
-            '<span style="display:none;">'+ t.slice(1,t.length)+ '<a href="#" class="less">Hide Comments</a></span>'
-        );
-        
-    }); 
-
-    $('a.more', minimized_comments).click(function(event){
-        event.preventDefault();
-        $(this).hide().prev().hide();
-        $(this).next().show();
-	$('p.comment2').show();
-
-	        
-    });
     
-    $('a.less', minimized_comments).click(function(event){
-        event.preventDefault();
-        $(this).parent().hide().prev().show().prev().show();   
-	$('p.comment2').hide(); 
-    });
-
-
-});
-</script>
-
-{% endblock %}
-
-
-
-</BODY>
+    <!-- If a post is more than 100 characters long then hide the text-->
+    <script>
+      jQuery(function(){
+      
+      var minimized_elements = $('p.minimize');
+      var minimized_comments = $('p.commentminimize');
+      
+      minimized_elements.each(function(){    
+      var t = $(this).text();        
+      if(t.length < 100) return;
+		    
+		    $(this).html(
+		    t.slice(0,100)+'<span>... </span><a href="#" class="more">Read More</a>'+
+		    '<span style="display:none;">'+ t.slice(100,t.length)+' <a href="#" class="less">Less</a></span>'
+		    );
+		    
+		    }); 
+		    
+		    $('a.more', minimized_elements).click(function(event){
+		    event.preventDefault();
+		    $(this).hide().prev().hide();
+		    $(this).next().show();        
+		    });
+		    
+		    $('a.less', minimized_elements).click(function(event){
+		    event.preventDefault();
+		    $(this).parent().hide().prev().show().prev().show();    
+		    });
+		    
+		    minimized_comments.each(function(){    
+		    var t = $(this).text();       
+		    if(t.length < 0) return;
+				  
+				  $(this).html(
+				  t.slice(0,0)+'<span> </span><a href="#" class="more">See Comments</a>'+
+				  '<span style="display:none;">'+ t.slice(1,t.length)+ '<a href="#" class="less">Hide Comments</a></span>'
+				  );
+				  
+				  }); 
+				  
+				  $('a.more', minimized_comments).click(function(event){
+				  event.preventDefault();
+				  $(this).hide().prev().hide();
+				  $(this).next().show();
+				  $('p.comment2').show();
+				  
+				  
+				  });
+				  
+				  $('a.less', minimized_comments).click(function(event){
+				  event.preventDefault();
+				  $(this).parent().hide().prev().show().prev().show();   
+				  $('p.comment2').hide(); 
+				  });
+				  
+				  
+				  });
+				  </script>
+    
+    {% endblock %}
+    
+    
+    
+  </BODY>
 </HTML>

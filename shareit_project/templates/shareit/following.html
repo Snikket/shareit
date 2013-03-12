@@ -1,13 +1,13 @@
 <html>
-{% extends 'shareit/base-bootstrap.html' %}
-{% block content %}
-<H2> Users you are following </H2>
-{% if following_list %}
-{% for follower in following_list %}
-<a href="/shareit/profiles/{{follower.follows}}"><p> {{follower.follows}} </p></a>
-{%endfor %}
-{%else%}
-<p> You are not following anyone.. </p>
-{%endif%}
-{% endblock %}
+  {% extends 'shareit/base-bootstrap.html' %}
+  {% block content %}
+  <H2> Users you are following </H2>
+  {% if following_list %}
+  {% for follower in following_list %}
+  <a href="/shareit/profiles/{{follower.follows}}"><p> {{follower.follows}} </p></a>
+  {%endfor %}
+  {%else%}
+  <p> You are not following anyone.. </p>
+  {%endif%}
+  {% endblock %}
 </html>
