@@ -64,9 +64,9 @@
 			{%endif%}
 
 			<a href="/shareit/profiles/{{post.userProfile}}">{{post.userProfile}} </a>posted in <a href="/shareit/cat_post/{{post.category}}">{{post.category}} Category</a>
-			<div id="userPost" name="userPost" class="well"> <p id="minimize" class="minimize">{{post}}</p></div>
+			<div id="userPost" name="userPost" class="well"> <p id="minimize" class="minimize">{{post}}</p>
 			{% if links %}
-			<div class="well">Links in this post:<br/>
+
 				{% for link in links %}
 					{% if link.linkPost == post %}
 						<li> <a href={{link.url}}>{{link}}</a></li>
